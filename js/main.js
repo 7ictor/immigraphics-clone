@@ -91,7 +91,7 @@ $(function() {
         return false;
     });
     var mapView = $("#map-canvas");
-    var tableView = $("#results");
+    var tableView = $(".table-results");
     $("#view-btn").click(function() {
         if (mapView.is(":visible")){
             mapView.hide("fast");

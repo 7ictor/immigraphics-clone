@@ -14,11 +14,9 @@ html,body{
     height: 100%;
     width: 100%;
 }
-#results{
-    display: none;
-}
 .table-results{
     padding: 20px;
+    display: none;
 }
 #view-btn{
     position: fixed;
