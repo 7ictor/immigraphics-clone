@@ -132,37 +132,6 @@ $("#signIn").click(function(){
 	logIn();
 });
 
-function logIn(){
-	var form = $("#login").serialize();
-	var user = $("#userName").val();
-	var pwd = $("#password").val();
-	md5Pwd = CryptoJS.MD5(pwd).toString();
-	console.log(md5Pwd);
-	$.ajax({
-		url: "http://safetrails.herokuapp.com/u/auth.php",
-		   type: "POST",
-		   data:{
-			   username:user,
-			   password:md5Pwd,
-			},
-		   xhrFields: {
-		      withCredentials: false
-		   },
-		   crossDomain: true,
-		   success: function(data){
-		   		console.log(data);
-		   		a = $.parseJSON(data);
-		   		console.log(a);
-		   		if(a.response=="success"){
-		   			console.log("entro");
-		   			window.location.href="search.html"
-		   		}else{
-		   			alert("Wrong username or password, please try again");
-		   		}
-		   }
-		});
-
-}
 
 function initialize(lat, lng) {
     google.maps.visualRefresh = true;
