@@ -42,34 +42,7 @@
 <div class="main">
 <div id="caseContainer" class="leftContainer">
 
-				<div id="logIn" class="row text-center">
-					<h3 >Welcome Back!</h3>
-					<div class="trackingTxt">
-					<p>
-						Enter your family or friend’s personal tracking number here.
-						When this person has arrived safely they will send a message and you will see a notification. This is a safe website. Your family or friends can’t be tracked by other person but you.
 
-					</p>
-
-					</div>
-
-						<form id="login" class="form-horizontal col-md-12" role="form">
-						  <div id="trackContent">
-							  <div class="form-group">
-							    <label for="track" class="col-sm-4 control-label">Traking number</label>
-							    <div class="col-sm-7">
-							      <input type="text" class="form-control" id="track"  placeholder="Tracking number">
-							    </div>
-							  </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-1 col-sm-10">
-						      <button type="button" id ="signIn" class="btn btn-default btn-success btn-sm">Check</button>
-						    </div>
-						  </div>
-						</form>
-
-				</div>
 
 
 </div>
@@ -89,23 +62,6 @@ $(function(){
 	initialize(30.600094,-105.076675);
 });
 
-$("#signIn").click(function(){
-	check();
-});
-
-function check(){
-	if($("#track").val()){
-		var content = "<h3>Notification Received</h3>";
-		var time = "<h5>On October 2d, 2013 at 9:53 AM</h5>";
-		$("#trackContent").html(content);
-		$("#trackContent").append(time);
-
-	}
-}
-
-$("#submitCase").click(function(){
-	$("#caseContainer").toggle( "slow" );
-});
 
 function initialize(lat, lng) {
     google.maps.visualRefresh = true;
