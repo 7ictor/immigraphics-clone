@@ -28,7 +28,7 @@
 		  <!-- Collect the nav links, forms, and other content for toggling -->
 		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		    <ul class="nav navbar-nav">
-		      <li><a href="#">Submit</a></li>
+		      <li id="submitCase"><a href="#">Submit</a></li>
 		      <li><a href="#">Track</a></li>
 		      <li><a href="#">Search</a></li>
 		    </ul>
@@ -41,7 +41,7 @@
 		  </div><!-- /.navbar-collapse -->
 		</nav>
 
-<div class="leftContainer">
+<div id="caseContainer" class="leftContainer">
 
 				<div id="logIn" class="row text-center">
 					<h3 >Welcome Back!</h3>
@@ -187,13 +187,16 @@
 
 
 $(function(){
+	$("#caseContainer").hide();
 	initialize(30.600094,-105.076675);
 });
 
 $("#signIn").click(function(){
 	logIn();
 });
-
+$("#submitCase").click(function(){
+	$("#caseContainer").toggle( "slow" );
+});
 function logIn(){
 	var form = $("#login").serialize();
 	var user = $("#userName").val();
@@ -218,6 +221,8 @@ function logIn(){
 		   		if(a.response=="success"){
 		   			console.log("entro");
 		   			window.location.href="search.html"
+		   		}else{
+		   			alert("Wrong username or password, please try again");
 		   		}
 		   }
 		});
