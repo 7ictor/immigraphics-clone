@@ -90,4 +90,17 @@ $(function() {
 
         return false;
     });
+    var mapView = $("#map-canvas");
+    var tableView = $("#results");
+    $("#view-btn").click(function() {
+        if (mapView.is(":visible")){
+            mapView.hide("fast");
+            tableView.show("fast");
+            $("#view-btn").html("View Map");
+        } else {
+            tableView.hide("fast");
+            mapView.show("fast");
+            $("#view-btn").html("View Table");
+        }
+    });
 });
