@@ -323,7 +323,7 @@ function initialize(lat, lng) {
 		return table;
 	}
 
-	function graphics(datos) {
+	function graphics(datos, title) {
 
 		var margin = {top: 10, right: 10, bottom: 25, left: 30},
 		width = 600 - margin.left - margin.right,
@@ -349,7 +349,7 @@ function initialize(lat, lng) {
 		.orient("left")
 		.tickFormat(d3.format(".2s"));
 
-		document.getElementById('stats').innerHTML = "<p style='font: 20 px; font-family: sans-serif'><br>Deaths in various corridors across the border.</p>";
+		document.getElementById('stats').innerHTML = "<p style='font: 20 px; font-family: sans-serif'><br>" + title + "</p>";
 
 		var svg = d3.select("div#stats").append("svg")
 		.attr("width", width + margin.left + margin.right)
@@ -357,7 +357,7 @@ function initialize(lat, lng) {
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		d3.csv("tablita.csv", function(error, data) {
+		d3.csv(datos, function(error, data) {
 			var generosG = d3.keys(data[0]).filter(function(key) { return key !== "gender"; });
 
 			data.forEach(function(d) {
@@ -421,14 +421,14 @@ function initialize(lat, lng) {
 }
 
 	function generals() {
-		graphics('tablita.csv');
+		graphics('tablita.csv', 'Deaths in various corridors across the border.');
 	}
 
 	function toCSV(tabla) {
 		var csvContent = "data:text/csv;charset=utf-8,";
 		tabla.forEach(function(infoArray, index) {
 			dataString = infoArray.join(",");
-			csvContent += index < infoArray.length ? dataString+ "\n" : dataString;
+			csvContent += index < infoArray.length ? dataString + "\n" : dataString;
 		});
 		var encodedUri = encodeURI(csvContent);
 		var link = document.createElement("a");
