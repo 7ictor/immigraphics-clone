@@ -1,0 +1,150 @@
+<html>
+<head>
+	<title>Safe Trails</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	// Get the JSON and extra data
+	var db = null;
+	var total = 0;
+	var males = 0;
+	var females = 0;
+	var dates = [];
+	var datesm = [];
+	var datesf = [];
+	var placest = [];
+	var placestC = [];
+	var placesm = [];
+	var placesmC = [];
+	var placesf = [];
+	var placesfC = [];
+	var corridt = [];
+	var corridtC = [];
+	var corridm = [];
+	var corridmC = [];
+	var corridf = [];
+	var corridfC = [];
+
+
+	function checkArray(dato, arra) {
+		ctrl = 0;
+		for (var i = 0; i < arra.length; i++) {
+			if (arra[i] == dato) {
+				ctrl++;
+			}
+		}
+		if (ctrl > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function addToArray(dato, count, arra) {
+		for (var i = 0; i < arra.length; i++) {
+			if (arra[i] == dato) {
+				count[i]++;
+			}
+		}
+	}
+
+	function filler(dato, count, arra) {
+		var b = checkArray(dato, arra);
+		if (!b) {
+			arra.push(dato);
+		}
+		addToArray(dato, count, arra);
+	}
+
+	function datesInitializer() {
+		datum = (new Date()).getYear() + 1;
+		for (var i = 2005; i < datum; i++) {
+			for (var j; j < 12; j++) {
+				dates.push(i + (j/100));
+				datesm.push(i + (j/100));
+				datesf.push(i + (j/100));
+			}
+		}
+	}
+
+	// Pearson correlation function
+	function correlData(data_a, data_b) {
+		upperSum = 0;
+		lowerSum_a = 0;
+		lowerSum_b = 0;
+		lowerProd = 0;
+		mean_a = mean(data_a);
+		mean_b = mean(data_b);
+		for (var i = 0; i < data_a.length; i++) {
+			upperSum += ((data_a[i].TagValue - mean_a) * (data_b[i].TagValue - mean_b));
+			lowerSum_a += Math.pow((data_a[i].TagValue - mean_a), 2);
+			lowerSum_b += Math.pow((data_b[i].TagValue - mean_b), 2);
+		}
+		lowerProd = Math.sqrt(lowerSum_a) * Math.sqrt(lowerSum_b)
+		return (upperSum / lowerProd);
+	}
+
+	$.ajaxSetup({ "async": false });
+	$.ajax({
+		url:'http://safetrails.herokuapp.com/cases/index.php?limit=3000',
+		dataType:'json',
+		xhrFields: {
+			withCredentials: false
+		},
+		type:'GET',
+		success:function(data){
+			// Extract info
+			db = data;
+		}
+	});
+	$.ajaxSetup({ "async": true });
+
+	// Let's do some magic
+	datesInitializer();
+	total = Object.keys(db).length;
+
+	// Extracting data one item at a time
+	for (var item in db) {
+
+		// Initialize variables
+		var mes = (new Date(db[item]["Report date"])).getMonth();
+		var anio = (new Date(db[item]["Report date"])).getYear();
+		var fecha = anio + (mes / 100);
+		var condado = db[item].Country.toLocaleLowerCase();
+		var corredor = db[item].Corridor.toLocaleLowerCase();
+		var longitud = db[item].Long;
+		var longitud = db[item].Lat;
+
+		// Filter males and females
+		if (db[item].Gender == "male") {
+			males++;
+			filler(condado, placesmC, placesm);
+			filler(corredor, corridmC, corridm);
+		}
+		if (db[item].Gender == "female") {
+			females++;
+			filler(condado, placesfC, placesf);
+			filler(corredor, corridfC, corridf);
+		}
+
+		// Get totals
+		filler(condado, placestC, placest);
+		filler(corredor, corridtC, corridt);
+	}
+
+	</script>
+	</head>
+	<body>
+
+
+		<div id="test"></div>
+
+
+
+	</body>
+	</html>
