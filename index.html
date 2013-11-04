@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/main.css">
 	<script src="js/jquery-1.9.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
 
 </head>
@@ -41,9 +41,8 @@
 		  </div><!-- /.navbar-collapse -->
 		</nav>
 
-<div class="container">
-		<div class="row">
-			<div class="col-md-4">
+<div class="leftContainer">
+
 				<div id="logIn" class="row text-center">
 					<h3 >Welcome Back!</h3>
 					<form id="login" class="form-horizontal col-md-12" role="form">
@@ -172,13 +171,10 @@
 					</form>
 				</div>
 
-			</div>
-			<div class="col-md-8 clearfix">
-				
-
-			</div>
-		</div>
 </div>
+
+<div id="map-canvas"></div>
+
 	</body>
 
 
@@ -189,6 +185,11 @@
 
 <script type="text/javascript">
 
+
+$(function(){
+	initialize(30.600094,-105.076675);
+});
+
 $("#signIn").click(function(){
 	logIn();
 });
@@ -196,13 +197,44 @@ $("#signIn").click(function(){
 function logIn(){
 	var form = $("#login").serialize();
 	console.log(form);
-	$.post( "http://safetrails.herokuapp.com/u/auth.php", form ,function( data ) {
-	  console.log(data);
-	});
+	$.ajax({
+		url: "http://safetrails.herokuapp.com/u/auth.php",
+		   type: "POST",
+		   data: form,
+		   xhrFields: {
+		      withCredentials: false
+		   },
+		   crossDomain: true,
+		   success: function(data){
+		   		console.log(data);
+		   }
+		});
 
 }
+
+function initialize(lat, lng) {
+    google.maps.visualRefresh = true;
+    start = new google.maps.LatLng(lat, lng);
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    var mapOptions = {
+        zoom: 6,
+        center: start,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+    directionsDisplay.setMap(map);
+    var marker = new google.maps.Marker({
+        position: map.getCenter(),
+        map: map,
+        title: 'Your Address'
+    });
+}
+
 	
 </script>
+
+
 
 
 </html>

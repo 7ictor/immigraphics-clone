@@ -2,11 +2,20 @@ html,body,#map-canvas{
     margin: 0;
     padding: 0;
     height: 100%;
-    min-height: 100%
+    min-height: 100%;
+    width: 100%;
 }
 .navbar{
     margin-bottom: 0;
 }
-.container{
-	margin: 10px;
+.leftContainer{
+	width: 30%;
+	height: 100%;
+	margin: 0px;
+	position: absolute;
+	padding: 10px;
+	z-index: 1;
+	background: white;
+	opacity:0.9;
+	filter:alpha(opacity=40);
 }
