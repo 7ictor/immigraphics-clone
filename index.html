@@ -15,10 +15,10 @@
 	<script src="js/md5.js"></script>
 </head>
 	<body>
-		<nav class="navbar navbar-default" role="navigation">
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		  <!-- Brand and toggle get grouped for better mobile display -->
 		  <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#safe-trails-nav">
 		      <span class="sr-only">Toggle navigation</span>
 		      <span class="icon-bar"></span>
 		      <span class="icon-bar"></span>
@@ -28,13 +28,13 @@
 		  </div>
 
 		  <!-- Collect the nav links, forms, and other content for toggling -->
-		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <div class="collapse navbar-collapse" id="safe-trails-nav">
 		    <ul class="nav navbar-nav">
 		      <li id="submitCase"><a href="#">Submit</a></li>
 		      <li><a href="search.html">Search</a></li>
 		      <li><a href="data_analysis.html">Statistics</a></li>
 		      <li><a href="track.html">Track</a></li>
-		      
+
 		    </ul>
 		    <!--<form class="navbar-form navbar-left" role="search">
 		      <div class="form-group">
@@ -45,6 +45,7 @@
 		  </div><!-- /.navbar-collapse -->
 		</nav>
 
+<div class="main">
 <div id="caseContainer" class="leftContainer">
 
 				<div id="logIn" class="row text-center">
@@ -70,7 +71,7 @@
 					  </div>
 					</form>
 				</div>
-				
+
 				<div id="register" class="row text-center">
 					<div class="message"></div>
 					<h6 >Please create an account to submit your information to Safe Trails</h6>
@@ -180,6 +181,7 @@
 </div>
 
 <div id="map-canvas"></div>
+</div>
 
 	</body>
 
@@ -244,14 +246,14 @@ function saveUser()
 		p2 = $("#newPassword2").val();
 		if(_password!=p2){
 		  	alert("Passwords do not match");
-		    return 
+		    return
 		}else{
 		   _password = CryptoJS.MD5(_password).toString();
 		 }
 		_profession = $("#profession option:selected").text();
 		_state =$("#state option:selected").text();
 		_email =$("#email").val();
-		 
+
 		$.ajax({
 				url: "http://safetrails.herokuapp.com/u/save.php",
 				   type: "POST",
@@ -280,7 +282,7 @@ function saveUser()
 				   }
 				});
 
-  
+
 }
 function initialize(lat, lng) {
     google.maps.visualRefresh = true;

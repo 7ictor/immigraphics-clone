@@ -15,10 +15,10 @@
 	<script src="js/md5.js"></script>
 </head>
 	<body>
-		<nav class="navbar navbar-default" role="navigation">
+		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 		  <!-- Brand and toggle get grouped for better mobile display -->
 		  <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#safe-trails-nav">
 		      <span class="sr-only">Toggle navigation</span>
 		      <span class="icon-bar"></span>
 		      <span class="icon-bar"></span>
@@ -28,13 +28,13 @@
 		  </div>
 
 		  <!-- Collect the nav links, forms, and other content for toggling -->
-		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <div class="collapse navbar-collapse" id="safe-trails-nav">
 		    <ul class="nav navbar-nav">
 		      <li id="submitCase"><a href="#">Submit</a></li>
 		      <li><a href="search.html">Search</a></li>
 		      <li><a href="data_analysis.html">Statistics</a></li>
 		      <li><a href="track.html">Track</a></li>
-		      
+
 		    </ul>
 		    <!--<form class="navbar-form navbar-left" role="search">
 		      <div class="form-group">
@@ -458,7 +458,7 @@ $(function(){
 	    $("#lat").val(lat);
 	    $("#long").val(lng);
 	    var latlng = new google.maps.LatLng(lat, lng);
-	    
+
 
 	    geocoder.geocode({'latLng': latlng}, function(results, status) {
 		    if (status == google.maps.GeocoderStatus.OK) {
@@ -475,7 +475,7 @@ $(function(){
 		      alert('Geocoder failed due to: ' + status);
 		    }
 		  });
-    
+
 	});
 });
 
@@ -503,7 +503,7 @@ function saveCase()
 	_lat = $("#lat").val();
 	_long = $("#long").val();
 
-		 
+
 		$.ajax({
 				url: "http://safetrails.herokuapp.com/cases/save.php",
 				   type: "POST",
@@ -545,7 +545,7 @@ function saveCase()
 				   }
 				});
 
-  
+
 }
 
 function initialize(lat, lng) {

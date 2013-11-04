@@ -40,12 +40,16 @@ html,body{
     padding: 10px 0;
 }
 .leftContainer{
-	width: 30%;
-	height: 100%;
+    width: 35%;
+    overflow-y: auto;
+    overflow-x: hidden;
 	margin: 0px;
 	position: absolute;
+    left: 0;
+    top: 70px;
+    bottom: 0;
 	padding: 10px;
-	z-index: 1;
+	z-index: 100;
 	background: white;
 	opacity:0.9;
 	filter:alpha(opacity=40);
