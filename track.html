@@ -25,13 +25,13 @@
 		      <span class="icon-bar"></span>
 		      <span class="icon-bar"></span>
 		    </button>
-		    <a class="navbar-brand" href="#">Safe Trails</a>
+		    <a class="navbar-brand" href="index.html">Safe Trails</a>
 		  </div>
 
 		  <!-- Collect the nav links, forms, and other content for toggling -->
 		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		    <ul class="nav navbar-nav">
-		      <li id="submitCase"><a href="#">Submit</a></li>
+		      <li id="submitCase"><a href="submit_case.html">Submit</a></li>
 		      <li><a href="search.html">Search</a></li>
 		      <li><a href="data_analysis.html">Statistics</a></li>
 		      <li><a href="track.html">Track</a></li>
@@ -58,22 +58,23 @@
 					</p>
 
 					</div>
-					<div id="trackContent">
+					
 						<form id="login" class="form-horizontal col-md-12" role="form">
-
-						  <div class="form-group">
-						    <label for="track" class="col-sm-4 control-label">Traking number</label>
-						    <div class="col-sm-7">
-						      <input type="text" class="form-control" id="track" name="username" placeholder="Tracking number">
-						    </div>
+						  <div id="trackContent">
+							  <div class="form-group">
+							    <label for="track" class="col-sm-4 control-label">Traking number</label>
+							    <div class="col-sm-7">
+							      <input type="text" class="form-control" id="track"  placeholder="Tracking number">
+							    </div>
+							  </div>
 						  </div>
 						  <div class="form-group">
-						    <div class="col-sm-offset-2 col-sm-10">
-						      <button type="button" id ="signIn" class="btn btn-default">Check</button>
+						    <div class="col-sm-offset-1 col-sm-10">
+						      <button type="button" id ="signIn" class="btn btn-default btn-success btn-sm">Check</button>
 						    </div>
 						  </div>
 						</form>
-					</div>
+					
 				</div>
 
 
@@ -98,7 +99,13 @@ $("#signIn").click(function(){
 });
 
 function check(){
+	if($("#track").val()){
+		var content = "<h3>Notification Received</h3>";
+		var time = "<h5>On October 2d, 2013 at 9:53 AM</h5>";
+		$("#trackContent").html(content);
+		$("#trackContent").append(time);
 
+	}
 }
 
 $("#submitCase").click(function(){
