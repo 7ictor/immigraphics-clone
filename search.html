@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
-    <title>Safe Trails</title>
+    <title>Search - Safe Trails</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!-- Optional theme -->
@@ -34,9 +34,118 @@
               <li><a href="#">Track</a></li>
               <li><a href="#">Search</a></li>
             </ul>
+            <form id="search-form" class="navbar-form navbar-right form-inline" role="form">
+              <div class="form-group">
+                <label class="sr-only" for="name">Name of Deceased</label>
+                <input type="text" class="form-control input-sm" name="name" id="name" placeholder="Name of Deceased">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="gender">Gender</label>
+                <select id="gender" class="form-control input-sm" name="gender">
+                  <option value="">Gender</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="undetermined">Undetermined</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="cod">Caouse of Death</label>
+                <select id="cod" class="form-control input-sm" name="cod">
+                  <option value="">Caouse of Death</option>
+                  <option value="Asphyxia">Asphyxia</option>
+                  <option value="Blunt Force Injury">Blunt Force Injury</option>
+                  <option value="Diabetes">Diabetes</option>
+                  <option value="Drowning">Drowning</option>
+                  <option value="Drug Overdose">Drug Overdose</option>
+                  <option value="Exposure">Exposure</option>
+                  <option value="Exsanguination">Exsanguination</option>
+                  <option value="Gunshot Wound">Gunshot Wound</option>
+                  <option value="Heart Disease">Heart Disease</option>
+                  <option value="Lightning Strike">Lightning Strike</option>
+                  <option value="Motor Vehicle Accident">Motor Vehicle Accident</option>
+                  <option value="Nonviable Fetus">Nonviable Fetus</option>
+                  <option value="Not Reported">Not Reported</option>
+                  <option value="Other Disease">Other Disease</option>
+                  <option value="Other Injury">Other Injury</option>
+                  <option value="Other Injury / Homicide">Other Injury / Homicide</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Pregnancy Complication">Pregnancy Complication</option>
+                  <option value="Skeletal Remains">Skeletal Remains</option>
+                  <option value="Undetermined">Undetermined</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="country">County</label>
+                <select id="country" class="form-control input-sm" name="country">
+                  <option value="">County</option>
+                  <option value="San Diego">San Diego</option>
+                  <option value="Imperial">Imperial</option>
+                  <option value="Yuma">Yuma</option>
+                  <option value="Pima">Pima</option>
+                  <option value="Santa Cruz">Santa Cruz</option>
+                  <option value="Cochise">Cochise</option>
+                  <option value="Hidalgo">Hidalgo</option>
+                  <option value="Luna">Luna</option>
+                  <option value="Ana">Doña Ana</option>
+                  <option value="El Paso">El Paso</option>
+                  <option value="Hudspeth">Hudspeth</option>
+                  <option value="Jeff Davis">Jeff Davis</option>
+                  <option value="Presidio">Presidio</option>
+                  <option value="Brewster">Brewster</option>
+                  <option value="Terrell">Terrell</option>
+                  <option value="Val Verde">Val Verde</option>
+                  <option value="Kinney">Kinney</option>
+                  <option value="Maverick">Maverick</option>
+                  <option value="Webb">Webb</option>
+                  <option value="Zapata">Zapata</option>
+                  <option value="Starr">Starr</option>
+                  <option value="Hidalgo">Hidalgo</option>
+                  <option value="Cameron">Cameron</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="corridor">Corridor</label>
+                <select id="corridor" class="form-control input-sm" name="corridor">
+                  <option value="">Corridor</option>
+                  <option value="Ajo">Ajo</option>
+                  <option value="Bernadino">Bernadino</option>
+                  <option value="Cabeza Prieta">Cabeza Prieta</option>
+                  <option value="Cowlick">Cowlick</option>
+                  <option value="Douglas">Douglas</option>
+                  <option value="Goldwater">Goldwater</option>
+                  <option value="Nogales">Nogales</option>
+                  <option value="Patagonia">Patagonia</option>
+                  <option value="San Miguel">San Miguel</option>
+                  <option value="Sasabe">Sasabe</option>
+                  <option value="Sierra Vista">Sierra Vista</option>
+                  <option value="Undetermined">Undetermined</option>
+                  <option value="Yuma">Yuma</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-success">Search</button>
+            </form>
           </div><!-- /.navbar-collapse -->
         </nav>
 
         <div id="map-canvas"></div>
+        <div class="table-results table-responsive">
+            <table id="results" class="table table-hover table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th>Name</th>
+                        <th>Gender</th>
+                        <th>Date</th>
+                        <th>County</th>
+                        <th>Corridor</th>
+                        <th>Cause of Death</th>
+                        <th width="25%">Description</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
     </body>
 </html>
