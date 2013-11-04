@@ -32,8 +32,10 @@
 		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		    <ul class="nav navbar-nav">
 		      <li id="submitCase"><a href="#">Submit</a></li>
-		      <li><a href="#">Track</a></li>
 		      <li><a href="search.html">Search</a></li>
+		      <li><a href="data_analysis.html">Statistics</a></li>
+		      <li><a href="track.html">Track</a></li>
+		      
 		    </ul>
 		    <!--<form class="navbar-form navbar-left" role="search">
 		      <div class="form-group">
@@ -372,7 +374,28 @@
 					  <div class="form-group">
 					    <label for="cod" class="col-sm-5 control-label">Cause of death</label>
 					    <div class="col-sm-7">
-					      <input type="text" class="form-control" id="cod" name="cod" placeholder="Cause of death">
+					      <select class="form-control" id="cod" name="cod" >
+					      	  <option value="Asphyxia">Asphyxia</option>
+			                  <option value="Blunt Force Injury">Blunt Force Injury</option>
+			                  <option value="Diabetes">Diabetes</option>
+			                  <option value="Drowning">Drowning</option>
+			                  <option value="Drug Overdose">Drug Overdose</option>
+			                  <option value="Exposure">Exposure</option>
+			                  <option value="Exsanguination">Exsanguination</option>
+			                  <option value="Gunshot Wound">Gunshot Wound</option>
+			                  <option value="Heart Disease">Heart Disease</option>
+			                  <option value="Lightning Strike">Lightning Strike</option>
+			                  <option value="Motor Vehicle Accident">Motor Vehicle Accident</option>
+			                  <option value="Nonviable Fetus">Nonviable Fetus</option>
+			                  <option value="Not Reported">Not Reported</option>
+			                  <option value="Other Disease">Other Disease</option>
+			                  <option value="Other Injury">Other Injury</option>
+			                  <option value="Other Injury / Homicide">Other Injury / Homicide</option>
+			                  <option value="Pending">Pending</option>
+			                  <option value="Pregnancy Complication">Pregnancy Complication</option>
+			                  <option value="Skeletal Remains">Skeletal Remains</option>
+			                  <option value="Undetermined">Undetermined</option>
+					      </select>
 					    </div>
 					  </div>
 
@@ -472,7 +495,7 @@ function saveCase()
 	_name = $("#name").val();
 	_gender= $("#gender option:selected").val();
 	_reportDate = getTimestamp($("#reportDate").val());
-	_cod = $("#cod").val();
+	_cod = $("#cod option:selected").val();
 	_place = $("#location").val();
 	_precision = $("#locationP").val();
 	_langManagement = $("#OMEcod").val();

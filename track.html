@@ -1,0 +1,132 @@
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<title>Safe Trails - deaths along the US-Mexican border</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/main.css">
+
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script src="js/md5.js"></script>
+
+</head>
+	<body>
+		<nav class="navbar navbar-default" role="navigation">
+		  <!-- Brand and toggle get grouped for better mobile display -->
+		  <div class="navbar-header">
+		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+		      <span class="sr-only">Toggle navigation</span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		    </button>
+		    <a class="navbar-brand" href="#">Safe Trails</a>
+		  </div>
+
+		  <!-- Collect the nav links, forms, and other content for toggling -->
+		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		    <ul class="nav navbar-nav">
+		      <li id="submitCase"><a href="#">Submit</a></li>
+		      <li><a href="search.html">Search</a></li>
+		      <li><a href="data_analysis.html">Statistics</a></li>
+		      <li><a href="track.html">Track</a></li>
+		      
+		    </ul>
+		    <!--<form class="navbar-form navbar-left" role="search">
+		      <div class="form-group">
+		        <input type="text" class="form-control" placeholder="Search">
+		      </div>
+		      <button type="submit" class="btn btn-default">Submit</button>
+		    </form>-->
+		  </div><!-- /.navbar-collapse -->
+		</nav>
+
+<div id="caseContainer" class="leftContainer">
+
+				<div id="logIn" class="row text-center">
+					<h3 >Welcome Back!</h3>
+					<div class="trackingTxt">
+					<p>
+						Enter your family or friend’s personal tracking number here. 
+						When this person has arrived safely they will send a message and you will see a notification. This is a safe website. Your family or friends can’t be tracked by other person but you.
+
+					</p>
+
+					</div>
+					<form id="login" class="form-horizontal col-md-12" role="form">
+
+					  <div class="form-group">
+					    <label for="track" class="col-sm-4 control-label">Traking number</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="track" name="username" placeholder="Tracking number">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					      <button type="button" id ="signIn" class="btn btn-default">Check</button>
+					    </div>
+					  </div>
+					</form>
+				</div>
+
+
+</div>
+
+<div id="map-canvas"></div>
+
+	</body>
+
+
+
+<script type="text/javascript">
+
+
+$(function(){
+
+	initialize(30.600094,-105.076675);
+});
+
+$("#signIn").click(function(){
+	check();
+});
+
+function check(){
+
+}
+
+$("#submitCase").click(function(){
+	$("#caseContainer").toggle( "slow" );
+});
+
+function initialize(lat, lng) {
+    google.maps.visualRefresh = true;
+    start = new google.maps.LatLng(lat, lng);
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    var mapOptions = {
+        zoom: 6,
+        center: start,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+    directionsDisplay.setMap(map);
+    var marker = new google.maps.Marker({
+        position: map.getCenter(),
+        map: map,
+        title: 'Your Address'
+    });
+}
+
+
+</script>
+
+
+
+
+</html>
+

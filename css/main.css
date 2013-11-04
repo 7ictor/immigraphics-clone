@@ -19,3 +19,8 @@ html,body,#map-canvas{
 	opacity:0.9;
 	filter:alpha(opacity=40);
 }
+
+
+.trackingTxt{
+	padding: 30px;
+}
