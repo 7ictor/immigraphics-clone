@@ -9,7 +9,7 @@
 	<script src="js/jquery-1.9.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-
+	<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
 
 </head>
 	<body>
@@ -50,7 +50,7 @@
 					  <div class="form-group">
 					    <label for="userName" class="col-sm-3 control-label">Username</label>
 					    <div class="col-sm-9">
-					      <input type="text" class="form-control" id="userName" name="username" placeholder="userName">
+					      <input type="text" class="form-control" id="userName" name="username" placeholder="Username">
 					    </div>
 					  </div>
 					  <div class="form-group">
@@ -196,17 +196,29 @@ $("#signIn").click(function(){
 
 function logIn(){
 	var form = $("#login").serialize();
-	console.log(form);
+	var user = $("#userName").val();
+	var pwd = $("#password").val();
+	md5Pwd = CryptoJS.MD5(pwd).toString();
+	console.log(md5Pwd);
 	$.ajax({
 		url: "http://safetrails.herokuapp.com/u/auth.php",
 		   type: "POST",
-		   data: form,
+		   data:{
+			   username:user,
+			   password:md5Pwd,
+			},
 		   xhrFields: {
 		      withCredentials: false
 		   },
 		   crossDomain: true,
 		   success: function(data){
 		   		console.log(data);
+		   		a = $.parseJSON(data);
+		   		console.log(a);
+		   		if(a.response=="success"){
+		   			console.log("entro");
+		   			window.location.href="search.html"
+		   		}
 		   }
 		});
 
