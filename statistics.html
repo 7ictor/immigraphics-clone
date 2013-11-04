@@ -63,7 +63,7 @@
 <div class="main">
 	<div id="caseContainer" class="leftContainer">
 
-		<div id="stats" class="row text-center">
+		<div id="statistics" class="row text-center">
 			<h3 >Statistics</h3>
 			<div id="tabs" class="row text-center">
 				<button type="button" id ="gral" class="btn btn-default" onClick="generals()">General</button>
@@ -237,7 +237,7 @@ function initialize(lat, lng) {
 		}
 		for (var i = 0; i < arra.length; i++) {
 			if (arra[i] == dato) {
-				count[i] = count[i] + 1;
+				count[i] += 1;
 			}
 		}
 	}
@@ -291,7 +291,7 @@ function initialize(lat, lng) {
 			filler(tipo, tipofC, tipof);
 			datador(fecha, datesf);			
 		}
-	}
+		}
 
 		// Get totals
 		filler(condado, placestC, placest);
@@ -303,36 +303,31 @@ function initialize(lat, lng) {
 	// Building some data structures
 	function builder(array1, array2, array1C, array2C, array) {
 		var table = [['gender','male','female']];
-		for (var item in array) {
-			temp = [];
-			temp.push(item);
+		for (var k = 0; k < (array.length + 1); k++) {
+			var temp = [];
+			temp.push(array[k]);
 			temp.push(0);
 			temp.push(0);
 			for (var i = 0; i < array1.length; i++) {
-				if (item == array1[i]) {
+				if (array[k] == array1[i]) {
 					temp[1] = array1C[i];
 				}
 			}
 			for (var j = 0; j < array2.length; j++) {
-				if (item == array2[j]) {
+				if (array[k] == array2[j]) {
 					temp[2] = array2C[j];
 				}
 			}
 			table.push(temp);
-		}
-		var csvContent = "data:text/csv;charset=utf-8,";
-		table.forEach(function(infoArray, index) {
-			dataString = infoArray.join(",");
-			csvContent += index < infoArray.length ? dataString+ "\n" : dataString;
-		});
-		return csvContent;
+		}		
+		return table;
 	}
 
-	function graphics(data) {
+	function graphics(datos) {
 
-		var margin = {top: 10, right: 10, bottom: 10, left: 10},
-		width = 300 - margin.left - margin.right,
-		height = 200 - margin.top - margin.bottom;
+		var margin = {top: 10, right: 10, bottom: 25, left: 25},
+		width = 600 - margin.left - margin.right,
+		height = 350 - margin.top - margin.bottom;
 
 		var x0 = d3.scale.ordinal()
 		.rangeRoundBands([0, width], .1);
@@ -362,65 +357,87 @@ function initialize(lat, lng) {
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		var generosG = d3.keys(data[0]).filter(function(key) { return key !== "gender"; });
+		d3.csv(datos, function(error, data) {
+			var generosG = d3.keys(data[0]).filter(function(key) { return key !== "gender"; });
 
-		data.forEach(function(d) {
-			d.ages = generosG.map(function(name) { return {name: name, value: +d[name]}; });
+			data.forEach(function(d) {
+				d.ages = generosG.map(function(name) { return {name: name, value: +d[name]}; });
+			});
+
+			x0.domain(data.map(function(d) { return d.gender; }));
+			x1.domain(generosG).rangeRoundBands([0, x0.rangeBand()]);
+			y.domain([0, 300]);
+
+			svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(xAxis);
+
+			svg.append("g")
+			.attr("class", "y axis")
+			.call(yAxis)
+			.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 6)
+			.attr("dy", ".71em")
+			.style("text-anchor", "end")
+			.text("Individuals");
+
+			var state = svg.selectAll(".state")
+			.data(data)
+			.enter().append("g")
+			.attr("class", "g")
+			.attr("transform", function(d) { return "translate(" + x0(d.State) + ",0)"; });
+
+			state.selectAll("rect")
+			.data(function(d) { return d.ages; })
+			.enter().append("rect")
+			.attr("width", x1.rangeBand())
+			.attr("x", function(d) { return x1(d.name); })
+			.attr("y", function(d) { return y(d.value); })
+			.attr("height", function(d) { return height - y(d.value); })
+			.style("fill", function(d) { return color(d.name); });
+
+			var legend = svg.selectAll(".legend")
+			.data(generosG.slice().reverse())
+			.enter().append("g")
+			.attr("class", "legend")
+			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+			legend.append("rect")
+			.attr("x", width - 18)
+			.attr("width", 18)
+			.attr("height", 18)
+			.style("fill", color);
+
+			legend.append("text")
+			.attr("x", width - 24)
+			.attr("y", 9)
+			.attr("dy", ".35em")
+			.style("text-anchor", "end")
+			.text(function(d) { return d; });
 		});
+	}
 
-		x0.domain(data.map(function(d) { return d.gender; }));
-		x1.domain(generosG).rangeRoundBands([0, x0.rangeBand()]);
-		y.domain([0, 300]);
+	function generals() {
+		graphics('tablita.csv');
+	}
 
-		svg.append("g")
-		.attr("class", "x axis")
-		.attr("transform", "translate(0," + height + ")")
-		.call(xAxis);
+	function toCSV(tabla) {
+		var csvContent = "data:text/csv;charset=utf-8,";
+		tabla.forEach(function(infoArray, index) {
+			dataString = infoArray.join(",");
+			csvContent += index < infoArray.length ? dataString+ "\n" : dataString;
+		});
+		var encodedUri = encodeURI(csvContent);
+		var link = document.createElement("a");
+		link.setAttribute("href", encodedUri);
+		link.setAttribute("download", "tablita.csv");
+		return link;
+	}
 
-		svg.append("g")
-		.attr("class", "y axis")
-		.call(yAxis)
-		.append("text")
-		.attr("transform", "rotate(-90)")
-		.attr("y", 6)
-		.attr("dy", ".71em")
-		.style("text-anchor", "end")
-		.text("Individuals");
-
-		var state = svg.selectAll(".state")
-		.data(data)
-		.enter().append("g")
-		.attr("class", "g")
-		.attr("transform", function(d) { return "translate(" + x0(d.State) + ",0)"; });
-
-		state.selectAll("rect")
-		.data(function(d) { return d.ages; })
-		.enter().append("rect")
-		.attr("width", x1.rangeBand())
-		.attr("x", function(d) { return x1(d.name); })
-		.attr("y", function(d) { return y(d.value); })
-		.attr("height", function(d) { return height - y(d.value); })
-		.style("fill", function(d) { return color(d.name); });
-
-		var legend = svg.selectAll(".legend")
-		.data(generosG.slice().reverse())
-		.enter().append("g")
-		.attr("class", "legend")
-		.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-		legend.append("rect")
-		.attr("x", width - 18)
-		.attr("width", 18)
-		.attr("height", 18)
-		.style("fill", color);
-
-		legend.append("text")
-		.attr("x", width - 24)
-		.attr("y", 9)
-		.attr("dy", ".35em")
-		.style("text-anchor", "end")
-		.text(function(d) { return d; });
-
+	function specials() {
+		document.getElementById('stats').innerHTML = "<p style='font: 20 px; font-family: sans-serif'><br>Under construction ...</p>";
 	}
 
 	$.ajaxSetup({ "async": false });
@@ -450,8 +467,8 @@ function initialize(lat, lng) {
 	treeSeed();
 	waterTheTree(database);
 	
-	correr = builder(corridm, corridmC, corridf, corridfC, corridt);
-	graphics(correr);
+	
+	//graphics();
 
 
 </script>
