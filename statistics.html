@@ -357,16 +357,16 @@ function initialize(lat, lng) {
 		.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		d3.csv(datos, function(error, data) {
+		d3.csv("tablita.csv", function(error, data) {
 			var generosG = d3.keys(data[0]).filter(function(key) { return key !== "gender"; });
 
 			data.forEach(function(d) {
-				d.ages = generosG.map(function(name) { return {name: name, value: +d[name]}; });
+				d.genero = generosG.map(function(name) { return {name: name, value: +d[name]}; });
 			});
 
 			x0.domain(data.map(function(d) { return d.gender; }));
 			x1.domain(generosG).rangeRoundBands([0, x0.rangeBand()]);
-			y.domain([0, d3.max(data, function(d) { return d3.max(d.ages, function(d) { return d.value; }); })]);
+			y.domain([0, d3.max(data, function(d) { return d3.max(d.genero, function(d) { return d.value; }); })]);
 
 			svg.append("g")
 			.attr("class", "x axis")
@@ -387,10 +387,10 @@ function initialize(lat, lng) {
 			.data(data)
 			.enter().append("g")
 			.attr("class", "g")
-			.attr("transform", function(d) { return "translate(" + x0(d.State) + ",0)"; });
+			.attr("transform", function(d) { return "translate(" + x0(d.gender) + ",0)"; });
 
 			state.selectAll("rect")
-			.data(function(d) { return d.ages; })
+			.data(function(d) { return d.genero; })
 			.enter().append("rect")
 			.attr("width", x1.rangeBand())
 			.attr("x", function(d) { return x1(d.name); })
@@ -416,8 +416,9 @@ function initialize(lat, lng) {
 			.attr("dy", ".35em")
 			.style("text-anchor", "end")
 			.text(function(d) { return d; });
+
 		});
-	}
+}
 
 	function generals() {
 		graphics('tablita.csv');
