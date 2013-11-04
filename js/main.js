@@ -1,6 +1,8 @@
 var directionsDisplay;
 var map;
 var start;
+var borderLat = 30.600094;
+var borderLng = -105.076675;
 
 // Initialize the view for the actual address of the client based on lat lng.
 function initialize(lat, lng) {
@@ -30,16 +32,17 @@ function rowBuilder(data, i){
 // Perform the Ajax request with the parameters
 function ajax_request(parameters) {
     $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        url: '',
+        url:'http://safetrails.herokuapp.com/cases/index.php',
+        dataType:'json',
+        xhrFields: { withCredentials: false },
+        type:'GET',
         data: parameters,
-        success: function(data) {
-            initialize(data.location.lat, data.location.lng);
-            $.each(data.results, function(i) {
+        success:function(data){
+            console.log(data);
+            initialize(borderLat, borderLng);
+            /*$.each(data.results, function(i) {
                 $(rowBuilder(this, i)).appendTo("#results tbody")
-            });
+            });*/
         },
         error: function(error) {
             $("#request-error").show().html("<strong>Sorry!</strong> The request could not be processed due to a server error.");
@@ -48,7 +51,9 @@ function ajax_request(parameters) {
 }
 
 $(function() {
-    initialize(30.600094,-105.076675);
+    initialize(borderLat, borderLng);
+    var mydata = $("form#myform").serialize();
+    ajax_request(mydata);
     $("form#myform").submit(function() {
         $("#results tbody").find("tr").remove();
         var mydata = $("form#myform").serialize();
