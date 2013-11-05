@@ -1,4 +1,4 @@
-<html>
+<html ng-app="emmigraphics">
 <head>
 	<meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
@@ -7,11 +7,16 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="css/main.css">
-
-	<script src="js/jquery-1.9.1.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<!-- libraries -->
+	<script src="lib/jquery-1.9.1.min.js"></script>
+	<script src="lib/bootstrap.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-	<script src="js/md5.js"></script>
+	<script src="lib/md5.js"></script>
+	<!-- Angular Js -->
+	<script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/angular-route.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
 </head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -23,158 +28,28 @@
 		      <span class="icon-bar"></span>
 		      <span class="icon-bar"></span>
 		    </button>
-		    <a class="navbar-brand" href="index.html">Safe Trails</a>
+		    <a class="navbar-brand" href="#/home">Safe Trails</a>
 		  </div>
 
 		  <!-- Collect the nav links, forms, and other content for toggling -->
 		  <div class="collapse navbar-collapse" id="safe-trails-nav">
 		    <ul class="nav navbar-nav">
-		      <li id="submitCase"><a href="#">Submit</a></li>
+		      <li id="submitCase"><a href="#/submit">Submit</a></li>
 		      <li><a href="search.html">Search</a></li>
-		      <li><a href="statistics.html">Statistics</a></li>
-		      <li><a href="track.html">Track</a></li>
+		      <li><a href="#/statistics">Statistics</a></li>
 		    </ul>
 		</nav>
 
-<div class="main">
-<div id="caseContainer" class="leftContainer">
+		<div class="main">
+			<div id="caseContainer" class="leftContainer" ng-view>
 
-				<div id="logIn" class="row text-center">
-					<h3 >Welcome Back!</h3>
-					<form id="login" class="form-horizontal col-md-12" role="form">
+			</div>
 
-					  <div class="form-group">
-					    <label for="userName" class="col-sm-3 control-label">Username</label>
-					    <div class="col-sm-9">
-					      <input type="text" class="form-control" id="userName" name="username" placeholder="Username">
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label for="password" class="col-sm-3 control-label">Password</label>
-					    <div class="col-sm-9">
-					      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-10">
-					      <button type="button" id ="signIn" class="btn btn-default btn-success btn-sm">Sign in</button>
-					    </div>
-					  </div>
-					</form>
-				</div>
+			<div id="map-canvas">
 
-				<div id="register" class="row text-center">
-					<div class="message"></div>
-					<h6 >Please create an account to submit your information to Safe Trails</h6>
-					<form id = "newUser" class="form-horizontal col-md-12" role="form">
-
-					  <div class="form-group">
-					    <label for="newUserName" class="col-sm-3 control-label">Username</label>
-					    <div class="col-sm-9">
-					      <input type="text" class="form-control" id="newUserName" placeholder="Username">
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label for="newPassword" class="col-sm-3 control-label">Password</label>
-					    <div class="col-sm-9">
-					      <input type="password" class="form-control" id="newPassword" placeholder="Password">
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label for="newPassword2" class="col-sm-3 control-label">Confirm Password</label>
-					    <div class="col-sm-9">
-					      <input type="password" class="form-control" id="newPassword2" placeholder="Password">
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <label for="profession" class="col-sm-3 control-label">Profession</label>
-					    <div class="col-sm-9">
-					      <select id="profession" class = "form-control" name="profession">
-					      	<option value="coroner">Coroner</option>
-					      	<option value="doctor">Doctor</option>
-					      	<option value="sherif">Sheriff</option>
-					      </select>
-					    </div>
-					  </div>
-					   <div class="form-group">
-					    <label for="state" class="col-sm-3 control-label">State</label>
-					    <div class="col-sm-9">
-					      <select id="state" class = "form-control" name="state">
-					      	<option value="AL">Alabama</option>
-							<option value="AK">Alaska</option>
-							<option value="AZ">Arizona</option>
-							<option value="AR">Arkansas</option>
-							<option value="CA">California</option>
-							<option value="CO">Colorado</option>
-							<option value="CT">Connecticut</option>
-							<option value="DE">Delaware</option>
-							<option value="DC">District Of Columbia</option>
-							<option value="FL">Florida</option>
-							<option value="GA">Georgia</option>
-							<option value="HI">Hawaii</option>
-							<option value="ID">Idaho</option>
-							<option value="IL">Illinois</option>
-							<option value="IN">Indiana</option>
-							<option value="IA">Iowa</option>
-							<option value="KS">Kansas</option>
-							<option value="KY">Kentucky</option>
-							<option value="LA">Louisiana</option>
-							<option value="ME">Maine</option>
-							<option value="MD">Maryland</option>
-							<option value="MA">Massachusetts</option>
-							<option value="MI">Michigan</option>
-							<option value="MN">Minnesota</option>
-							<option value="MS">Mississippi</option>
-							<option value="MO">Missouri</option>
-							<option value="MT">Montana</option>
-							<option value="NE">Nebraska</option>
-							<option value="NV">Nevada</option>
-							<option value="NH">New Hampshire</option>
-							<option value="NJ">New Jersey</option>
-							<option value="NM">New Mexico</option>
-							<option value="NY">New York</option>
-							<option value="NC">North Carolina</option>
-							<option value="ND">North Dakota</option>
-							<option value="OH">Ohio</option>
-							<option value="OK">Oklahoma</option>
-							<option value="OR">Oregon</option>
-							<option value="PA">Pennsylvania</option>
-							<option value="RI">Rhode Island</option>
-							<option value="SC">South Carolina</option>
-							<option value="SD">South Dakota</option>
-							<option value="TN">Tennessee</option>
-							<option value="TX">Texas</option>
-							<option value="UT">Utah</option>
-							<option value="VT">Vermont</option>
-							<option value="VA">Virginia</option>
-							<option value="WA">Washington</option>
-							<option value="WV">West Virginia</option>
-							<option value="WI">Wisconsin</option>
-							<option value="WY">Wyoming</option>
-					      </select>
-					    </div>
-					  </div>
-			  		  <div class="form-group">
-					    <label for="email" class="col-sm-3 control-label">Email</label>
-					    <div class="col-sm-9">
-					      <input type="email" class="form-control" id="email" placeholder="Email">
-					    </div>
-					  </div>
-
-					  <div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-10">
-					      <button id="saveUser" type="button" class="btn btn-default btn-success btn-sm">Create an account</button>
-					    </div>
-					  </div>
-					</form>
-				</div>
-
-</div>
-
-<div id="map-canvas"></div>
-</div>
-
-	</body>
+			</div>
+		</div>
+</body>
 
 
 
@@ -182,7 +57,6 @@
 
 
 $(function(){
-	$("#caseContainer").hide();
 	initialize(30.600094,-105.076675);
 });
 
@@ -194,9 +68,22 @@ $("#saveUser").click(function(){
 });
 
 
-$("#submitCase").click(function(){
-	$("#caseContainer").toggle( "slow" );
-});
+
+function initialize(lat, lng) {
+    google.maps.visualRefresh = true;
+    start = new google.maps.LatLng(lat, lng);
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    var mapOptions = {
+        zoom: 6,
+        center: start,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+    directionsDisplay.setMap(map);
+}
+
+
 function logIn(){
 	var form = $("#login").serialize();
 	var user = $("#userName").val();
@@ -274,19 +161,6 @@ function saveUser()
 				});
 
 
-}
-function initialize(lat, lng) {
-    google.maps.visualRefresh = true;
-    start = new google.maps.LatLng(lat, lng);
-    directionsDisplay = new google.maps.DirectionsRenderer();
-    var mapOptions = {
-        zoom: 6,
-        center: start,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-    directionsDisplay.setMap(map);
 }
 
 
