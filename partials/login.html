@@ -26,8 +26,6 @@
 <div id="register" class="row text-center">
 	<div class="message"></div>
 	<h6 >Please create an account to submit your information to Safe Trails</h6>
-	{{ Title }}
-	{{countries.length}}
 	<form id = "newUser" class="form-horizontal col-md-12" role="form">
 	  <!-- Username -->
 	  <div class="form-group">
@@ -65,8 +63,10 @@
 	   <div class="form-group">
 	    <label for="state" class="col-sm-3 control-label">State</label>
 	    <div class="col-sm-9">
+
 	      <select id="state" class = "form-control">
 	      	<option ng-repeat="state in states" value="{{state.name}}">{{state.name}}</option>
+
 		  </select>
 	    </div>
 	    <!-- Email -->
@@ -84,6 +84,4 @@
 	    </div>
 	  </div>
 	</form>
-
 </div>
-
