@@ -1,0 +1,262 @@
+				<div id="logIn" class="row text-center">
+					<h4 >Welcome Back!</h4>
+					<h3 >New Case</h3>
+					<form id="formLogin" class="form-horizontal col-md-12" role="form">
+
+						<!--ExtId-->
+					  <div class="form-group">
+					    <label for="extId" class="col-sm-5 control-label">ExtId</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="extId" name="extId" placeholder="ExtId">
+					    </div>
+					  </div>
+
+					<!--Name-->
+					  <div class="form-group">
+					    <label for="name" class="col-sm-5 control-label">Full Name</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="name" name="name" placeholder="Full name">
+					    </div>
+					  </div>
+
+				  	<!--Gender-->
+					<div class="form-group">
+					    <label for="userName" class="col-sm-5 control-label">Gender</label>
+					    <div class="col-sm-7">
+					      <select id="gender" name="gender" class="form-control">
+					      	<option value="Male">Male</option>
+					      	<option value="Female">Female</option>
+					      </select>
+					    </div>
+					  </div>
+
+					  <!--Reporting date-->
+					  <div class="form-group">
+					    <label for="reportDate" class="col-sm-5 control-label">Reporting Date</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="reportDate" name="reportDate" placeholder="yyyy-mm-dd">
+					    </div>
+					  </div>
+
+					  <!--Country-->
+					  <div class="form-group">
+					    <label for="country" class="col-sm-5 control-label">Country</label>
+					    <div class="col-sm-7">
+					      <select class="form-control" id="country" name="country">
+				      		<option ng-repeat="country in countries" value="{{country.name}}">{{country.name}}</option>
+				      	  </select>
+					    </div>
+					  </div>
+
+					  <!--Corridor-->
+					  <div class="form-group">
+					    <label for="corridor" class="col-sm-5 control-label">Corridor</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="corridor" name="country" placeholder="Corridor">
+					    </div>
+					  </div>
+
+					  <!--Location-->
+					  <div class="form-group">
+					    <label for="location" class="col-sm-5 control-label">Location</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="location" name="country" placeholder="Location">
+					    </div>
+					  </div>
+
+					  <!--Location precision-->
+					  <div class="form-group">
+					    <label for="locationP" class="col-sm-5 control-label">Location Precision</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="locationP" name="locationP" placeholder="Location Precision">
+					    </div>
+					  </div>
+
+					  <!--Cause of death-->
+					  <div class="form-group">
+					    <label for="cod" class="col-sm-5 control-label">Cause of death</label>
+					    <div class="col-sm-7">
+					      <select class="form-control" id="cod" name="cod" >
+					      	  <option value="Asphyxia">Asphyxia</option>
+			                  <option value="Blunt Force Injury">Blunt Force Injury</option>
+			                  <option value="Diabetes">Diabetes</option>
+			                  <option value="Drowning">Drowning</option>
+			                  <option value="Drug Overdose">Drug Overdose</option>
+			                  <option value="Exposure">Exposure</option>
+			                  <option value="Exsanguination">Exsanguination</option>
+			                  <option value="Gunshot Wound">Gunshot Wound</option>
+			                  <option value="Heart Disease">Heart Disease</option>
+			                  <option value="Lightning Strike">Lightning Strike</option>
+			                  <option value="Motor Vehicle Accident">Motor Vehicle Accident</option>
+			                  <option value="Nonviable Fetus">Nonviable Fetus</option>
+			                  <option value="Not Reported">Not Reported</option>
+			                  <option value="Other Disease">Other Disease</option>
+			                  <option value="Other Injury">Other Injury</option>
+			                  <option value="Other Injury / Homicide">Other Injury / Homicide</option>
+			                  <option value="Pending">Pending</option>
+			                  <option value="Pregnancy Complication">Pregnancy Complication</option>
+			                  <option value="Skeletal Remains">Skeletal Remains</option>
+			                  <option value="Undetermined">Undetermined</option>
+					      </select>
+					    </div>
+					  </div>
+
+					  <!--OME Cause of death-->
+					  <div class="form-group">
+					    <label for="OMEcod" class="col-sm-5 control-label">OME determinded COD</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="OMEcod" name="OMEcod" placeholder="OME COD">
+					    </div>
+					  </div>
+
+					   <!--latitude-->
+					  <div class="form-group">
+					    <label for="lat" class="col-sm-5 control-label">Latitude</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="lat" name="lat" placeholder="Latitude">
+					    </div>
+					  </div>
+
+					   <!--latitude-->
+					  <div class="form-group">
+					    <label for="long" class="col-sm-5 control-label">Longitude</label>
+					    <div class="col-sm-7">
+					      <input type="text" class="form-control" id="long" name="long" placeholder="Longitude">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-10">
+					      <button type="button" id ="signIn" class="btn btn-default btn-success btn-sm">Create Case</button>
+					    </div>
+					  </div>
+					</form>
+				</div>
+
+
+
+
+<script type="text/javascript">
+var latLongMarker;
+var geocoder;
+var infowindow = new google.maps.InfoWindow();
+$(function(){
+	initialize(30.600094,-105.076675);
+
+
+	google.maps.event.addListener(map, "rightclick", function(event) {
+	    var lat = event.latLng.lat();
+	    var lng = event.latLng.lng();
+	    // populate yor box/field with lat, lng
+	    $("#lat").val(lat);
+	    $("#long").val(lng);
+	    var latlng = new google.maps.LatLng(lat, lng);
+
+
+	    geocoder.geocode({'latLng': latlng}, function(results, status) {
+		    if (status == google.maps.GeocoderStatus.OK) {
+		      if (results[1]) {
+		        //map.setZoom(11);
+		        latLongMarker.setPosition(latlng);
+		        infowindow.setContent(results[1].formatted_address);
+		        $("#location").val(results[1].formatted_address);
+		        infowindow.open(map, latLongMarker);
+		      } else {
+		        alert('No results found');
+		      }
+		    } else {
+		      alert('Geocoder failed due to: ' + status);
+		    }
+		  });
+
+	});
+});
+
+$("#signIn").click(function(){
+	saveCase();
+});
+
+function getTimestamp(str) {
+  var d = str.match(/\d+/g); // extract date parts
+  return +new Date(}
+
+function saveCase(){
+	_extid = $("#extId").val();
+	_name = $("#name").val();
+	_gender= $("#gender option:selected").val();
+	_reportDate = getTimestamp($("#reportDate").val());
+	_cod = $("#cod option:selected").val();
+	_place = $("#location").val();
+	_precision = $("#locationP").val();
+	_langManagement = $("#OMEcod").val();
+	_country = $("#country option:selected").text();
+	_corridor = $("#corridor").val();
+	_lat = $("#lat").val();
+	_long = $("#long").val();
+
+
+		$.ajax({
+				url: "http://safetrails.herokuapp.com/cases/save.php",
+				   type: "POST",
+				   data:{
+					    extid:_extid,
+						name:_name,
+						gender:_gender,
+						reportDate:_reportDate,
+						cod:_cod,
+						place:_place,
+						precision:_precision,
+						langManagement:_langManagement,
+						country:_country,
+						corridor:_corridor,
+						lat:_lat,
+						long: _long
+					},
+				   xhrFields: {
+				      withCredentials: false
+				   },
+				   crossDomain: true,
+				   success: function(data){
+				   		console.log(data);
+				   		a = $.parseJSON(data);
+				   		console.log(a);
+				   		if(a.response=="success"){
+				   			console.log("entro");
+				   			$('#formLogin').trigger("reset");
+				   			    latLongMarker = new google.maps.Marker(
+								    {
+								    	map:map,
+								    	title: 'location'
+								    }
+						    	);
+				   			alert("Case created");
+				   		}else{
+				   			alert("error creating user");
+				   		}
+				   }
+				});}
+
+function initialize(lat, lng) {
+	geocoder = new google.maps.Geocoder();
+    google.maps.visualRefresh = true;
+    start = new google.maps.LatLng(lat, lng);
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    var mapOptions = {
+        zoom: 6,
+        center: start,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+    directionsDisplay.setMap(map);
+    latLongMarker = new google.maps.Marker(
+    {
+    	map:map,
+    	title: 'location'
+    }
+    	);}
+
+
+</script>
+
+
+
