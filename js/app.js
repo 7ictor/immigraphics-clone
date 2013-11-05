@@ -27,8 +27,6 @@ emmigraphics.config(['$routeProvider',
         controller: 'statisticsController'
       }).               
       otherwise({
-
         redirectTo: '/home'
-
       });
   }]);
