@@ -10,13 +10,22 @@
 	<!-- libraries -->
 	<script src="lib/jquery-1.9.1.min.js"></script>
 	<script src="lib/bootstrap.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-	<script src="lib/md5.js"></script>
+	<script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXviwE2c0aIB_zEL1-GMDZTlwoa-XPMZk&sensor=false">
+    </script>
+	
 	<!-- Angular Js -->
 	<script src="lib/angular/angular.js"></script>
     <script src="lib/angular/angular-route.js"></script>
+    
+	<!--Angular Configurations and controllers  -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
+
+    <!-- App scripts -->
+    <script src="lib/main.js"></script>
+    <script src="lib/md5.js"></script>
+
 </head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -34,140 +43,20 @@
 		  <!-- Collect the nav links, forms, and other content for toggling -->
 		  <div class="collapse navbar-collapse" id="safe-trails-nav">
 		    <ul class="nav navbar-nav">
-		      <li id="submitCase"><a href="#/submit">Submit</a></li>
-		      <li><a href="search.html">Search</a></li>
+		      <li><a href="#/create">Create user</a></li>	
+		      <li><a href="#/submit">Submit</a></li>
+		      <li><a href="#/search">Search</a></li>
 		      <li><a href="#/statistics">Statistics</a></li>
 		    </ul>
 		</nav>
 
-		<div class="main">
-			<div id="caseContainer" class="leftContainer" ng-view>
+		<div class="main" ng-view>
 
-			</div>
 
-			<div id="map-canvas">
+		</div>
+		<div id="map-canvas">
 
-			</div>
 		</div>
 </body>
-
-
-
-<script type="text/javascript">
-
-
-$(function(){
-	initialize(30.600094,-105.076675);
-});
-
-$("#signIn").click(function(){
-	logIn();
-});
-$("#saveUser").click(function(){
-	saveUser();
-});
-
-
-
-function initialize(lat, lng) {
-    google.maps.visualRefresh = true;
-    start = new google.maps.LatLng(lat, lng);
-    directionsDisplay = new google.maps.DirectionsRenderer();
-    var mapOptions = {
-        zoom: 6,
-        center: start,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-    directionsDisplay.setMap(map);
-}
-
-
-function logIn(){
-	var form = $("#login").serialize();
-	var user = $("#userName").val();
-	var pwd = $("#password").val();
-	md5Pwd = CryptoJS.MD5(pwd).toString();
-	console.log(md5Pwd);
-	$.ajax({
-		url: "http://safetrails.herokuapp.com/u/auth.php",
-		   type: "POST",
-		   data:{
-			   username:user,
-			   password:md5Pwd,
-			},
-		   xhrFields: {
-		      withCredentials: false
-		   },
-		   crossDomain: true,
-		   success: function(data){
-		   		console.log(data);
-		   		a = $.parseJSON(data);
-		   		console.log(a);
-		   		if(a.response=="success"){
-		   			console.log("entro");
-		   			window.location.href="submit_case.html"
-		   		}else{
-		   			$(".message").html("Wrong username or password, please try again");
-		   		}
-		   }
-		});
-
-}
-function saveUser()
-{
-
-		_username = $("#newUserName").val();
-		_password = $("#newPassword").val();
-
-		p2 = $("#newPassword2").val();
-		if(_password!=p2){
-		  	alert("Passwords do not match");
-		    return
-		}else{
-		   _password = CryptoJS.MD5(_password).toString();
-		 }
-		_profession = $("#profession option:selected").text();
-		_state =$("#state option:selected").text();
-		_email =$("#email").val();
-
-		$.ajax({
-				url: "http://safetrails.herokuapp.com/u/save.php",
-				   type: "POST",
-				   data:{
-					   username:_username,
-					   password:_password,
-					   profession: _profession,
-					   state:_state,
-					   county:"test_county",
-					   email:_email
-					},
-				   xhrFields: {
-				      withCredentials: false
-				   },
-				   crossDomain: true,
-				   success: function(data){
-				   		console.log(data);
-				   		a = $.parseJSON(data);
-				   		console.log(a);
-				   		if(a.response=="success"){
-				   			console.log("entro");
-				   			$(".message").html("User created.");
-				   		}else{
-				   			$(".message").html("error creating user");
-				   		}
-				   }
-				});
-
-
-}
-
-
-</script>
-
-
-
-
 </html>
 

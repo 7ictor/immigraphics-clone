@@ -1,86 +1,94 @@
-
-<!-- Login div -->
-<div id="logIn" class="row text-center">
-	<h3 >Welcome Back!</h3>
-	<form id="login" class="form-horizontal col-md-12" role="form">
-	  <div class="form-group">
-	    <label for="userName" class="col-sm-3 control-label">Username</label>
-	    <div class="col-sm-9">
-	      <input type="text" class="form-control" id="userName" name="username" placeholder="Username">
-	    </div>
-	  </div>
-	  <div class="form-group">
-	    <label for="password" class="col-sm-3 control-label">Password</label>
-	    <div class="col-sm-9">
-	      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-	    </div>
-	  </div>
-	  <div class="form-group">
-	    <div class="col-sm-offset-2 col-sm-10">
-	      <button type="button" id ="signIn" class="btn btn-default btn-success btn-sm">Sign in</button>
-	    </div>
-	  </div>
-	</form>
-</div>
-<!-- Request invitation div -->
-<div id="register" class="row text-center">
-	<div class="message"></div>
-	<h6 >Please create an account to submit your information to Safe Trails</h6>
-	<form id = "newUser" class="form-horizontal col-md-12" role="form">
-	  <!-- Username -->
-	  <div class="form-group">
-	    <label for="newUserName" class="col-sm-3 control-label">Username</label>
-	    <div class="col-sm-9">
-	      <input type="text" class="form-control" id="newUserName" placeholder="Username">
-	    </div>
-	  </div>
-	  <!-- Password -->
-	  <div class="form-group">
-	    <label for="newPassword" class="col-sm-3 control-label">Password</label>
-	    <div class="col-sm-9">
-	      <input type="password" class="form-control" id="newPassword" placeholder="Password">
-	    </div>
-	  </div>
-	  <!-- Confirm password -->
-	  <div class="form-group">
-	    <label for="newPassword2" class="col-sm-3 control-label">Confirm Password</label>
-	    <div class="col-sm-9">
-	      <input type="password" class="form-control" id="newPassword2" placeholder="Password">
-	    </div>
-	  </div>
-	  <!-- Profession -->
-	  <div class="form-group">
-	    <label for="profession" class="col-sm-3 control-label">Profession</label>
-	    <div class="col-sm-9">
-	      <select id="profession" class = "form-control" name="profession">
-	      	<option value="coroner">Coroner</option>
-	      	<option value="doctor">Doctor</option>
-	      	<option value="sherif">Sheriff</option>
-	      </select>
-	    </div>
-	  </div>
-	  <!-- States -->
-	   <div class="form-group">
-	    <label for="state" class="col-sm-3 control-label">State</label>
-	    <div class="col-sm-9">
-	      <select id="state" class = "form-control">
-	      	<option ng-repeat="state in states" value="{{state.name}}">{{state.name}}</option>
-
-		  </select>
-	    </div>
-	    <!-- Email -->
-	  </div>
+<div id="caseContainer" class="leftContainer" >
+	<!-- Login div -->
+	<div id="logIn" class="row text-center">
+		<h3 >Welcome Back!</h3>
+		<form id="login" class="form-horizontal col-md-12" role="form" ng-submit="login()">
 		  <div class="form-group">
-	    <label for="email" class="col-sm-3 control-label">Email</label>
-	    <div class="col-sm-9">
-	      <input type="email" class="form-control" id="email" placeholder="Email">
-	    </div>
-	  </div>
+		    <label for="userName" class="col-sm-3 control-label">Username</label>
+		    <div class="col-sm-9">
+		      <input type="text" class="form-control" id="userName" ng-model="user.name" placeholder="Username" required>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="password" class="col-sm-3 control-label">Password</label>
+		    <div class="col-sm-9">
+		      <input type="password" class="form-control" id="password" ng-model="user.password" placeholder="Password" required>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-1 col-sm-10">
+		      <button type="submit" id ="signIn" class="btn btn-default btn-success btn-sm">Sign in</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<!-- Request invitation div -->
+	<div id="register" class="row text-center">
+		<div class="message"></div>
+		<h3>Request invitation</h3>
+		<h6 >Bla bla bla bla bla bla bla, bla for request an invitation bla bla bla</h6>
+		<button id="saveUser" type="button" class="btn btn-default btn-success btn-sm">Send request</button>
+	</div>
 
-	  <div class="form-group">
-	    <div class="col-sm-offset-2 col-sm-10">
-	      <button id="saveUser" type="button" class="btn btn-default btn-success btn-sm">Create an account</button>
-	    </div>
-	  </div>
-	</form>
 </div>
+
+
+<script type="text/javascript">
+$("#signIn").click(function(){
+	console.log("login");
+	logIn();
+
+});
+$("#saveUser").click(function(){
+	console.log("save user");
+	saveUser();
+});
+
+
+function saveUser()
+{
+
+		_username = $("#newUserName").val();
+		_password = $("#newPassword").val();
+
+		p2 = $("#newPassword2").val();
+		if(_password!=p2){
+		  	alert("Passwords do not match");
+		    return
+		}else{
+		   _password = CryptoJS.MD5(_password).toString();
+		 }
+		_profession = $("#profession option:selected").text();
+		_state =$("#state option:selected").text();
+		_email =$("#email").val();
+
+		$.ajax({
+				url: "http://safetrails.herokuapp.com/u/save.php",
+				   type: "POST",
+				   data:{
+					   username:_username,
+					   password:_password,
+					   profession: _profession,
+					   state:_state,
+					   county:"test_county",
+					   email:_email
+					},
+				   xhrFields: {
+				      withCredentials: false
+				   },
+				   crossDomain: true,
+				   success: function(data){
+				   		console.log(data);
+				   		a = $.parseJSON(data);
+				   		console.log(a);
+				   		if(a.response=="success"){
+				   			console.log("entro");
+				   			$(".message").html("User created.");
+				   		}else{
+				   			$(".message").html("error creating user");
+				   		}
+				   }
+				});
+}
+
+</script>

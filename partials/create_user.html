@@ -1,0 +1,63 @@
+<div id="caseContainer" class="leftContainer" >
+<div id="register" class="row text-center">
+		<div class="message"></div>
+		<h6 >Please create an account to submit your information to Safe Trails</h6>
+		<form id = "newUser" class="form-horizontal col-md-12" role="form" ng-submit="createUser()">
+		  <input type="hidden" value="county test" ng-model="user.county">
+		  <!-- Username -->
+		  <div class="form-group">
+		    <label for="newUserName" class="col-sm-3 control-label">Username</label>
+		    <div class="col-sm-9">
+		      <input type="text" class="form-control" id="newUserName" placeholder="Username" ng-model="user.name">
+		    </div>
+		  </div>
+		  <!-- Password -->
+		  <div class="form-group">
+		    <label for="newPassword" class="col-sm-3 control-label">Password</label>
+		    <div class="col-sm-9">
+		      <input type="password" class="form-control" id="newPassword" placeholder="Password" ng-model="user.password">
+		    </div>
+		  </div>
+		  <!-- Confirm password -->
+		  <div class="form-group">
+		    <label for="newPassword2" class="col-sm-3 control-label">Confirm Password</label>
+		    <div class="col-sm-9">
+		      <input type="password" class="form-control" id="newPassword2" placeholder="Password" ng-model="user.password2">
+		    </div>
+		  </div>
+		  <!-- Profession -->
+		  <div class="form-group">
+		    <label for="profession" class="col-sm-3 control-label">Profession</label>
+		    <div class="col-sm-9">
+		      <select id="profession" class = "form-control" name="profession" ng-model="profession">
+		      	<option value="coroner">Coroner</option>
+		      	<option value="doctor">Doctor</option>
+		      	<option value="sherif">Sheriff</option>
+		      </select>
+		    </div>
+		  </div>
+		  <!-- States -->
+		   <div class="form-group">
+		    <label for="state" class="col-sm-3 control-label">State</label>
+		    <div class="col-sm-9">
+		      <select id="state" class = "form-control" ng-model="state">
+		      	<option ng-repeat="state in states" value="{{state.name}}">{{state.name}}</option>
+			  </select>
+		    </div>
+		    <!-- Email -->
+		  </div>
+			  <div class="form-group">
+		    <label for="email" class="col-sm-3 control-label">Email</label>
+		    <div class="col-sm-9">
+		      <input type="email" class="form-control" id="email" placeholder="Email" ng-model="email">
+		    </div>
+		  </div>
+
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <button id="saveUser" type="submit" class="btn btn-default btn-success btn-sm">Create an account</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
+</div>
