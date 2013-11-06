@@ -1,5 +1,5 @@
 <div id="caseContainer" class="leftContainer" >
-				<div id="logIn" class="row text-center">
+				<div id="newCase" class="row text-center">
 					<h4 >Welcome Back!</h4>
 					<h3 >New Case</h3>
 					<form id="formLogin" class="form-horizontal col-md-12" role="form">
@@ -127,137 +127,10 @@
 					  </div>
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-10">
-					      <button type="button" id ="signIn" class="btn btn-default btn-success btn-sm">Create Case</button>
+					      <button type="button" id ="createCase" class="btn btn-default btn-success btn-sm" onClick="saveCase()">Create Case</button>
 					    </div>
 					  </div>
 					</form>
 				</div>
+
 </div>
-
-
-
-<script type="text/javascript">
-var latLongMarker;
-var geocoder;
-var infowindow = new google.maps.InfoWindow();
-$(function(){
-	initialize(30.600094,-105.076675);
-
-
-	google.maps.event.addListener(map, "rightclick", function(event) {
-	    var lat = event.latLng.lat();
-	    var lng = event.latLng.lng();
-	    // populate yor box/field with lat, lng
-	    $("#lat").val(lat);
-	    $("#long").val(lng);
-	    var latlng = new google.maps.LatLng(lat, lng);
-
-
-	    geocoder.geocode({'latLng': latlng}, function(results, status) {
-		    if (status == google.maps.GeocoderStatus.OK) {
-		      if (results[1]) {
-		        //map.setZoom(11);
-		        latLongMarker.setPosition(latlng);
-		        infowindow.setContent(results[1].formatted_address);
-		        $("#location").val(results[1].formatted_address);
-		        infowindow.open(map, latLongMarker);
-		      } else {
-		        alert('No results found');
-		      }
-		    } else {
-		      alert('Geocoder failed due to: ' + status);
-		    }
-		  });
-
-	});
-});
-
-$("#signIn").click(function(){
-	saveCase();
-});
-
-function getTimestamp(str) {
-  var d = str.match(/\d+/g); // extract date parts
-  return +new Date(}
-
-function saveCase(){
-	_extid = $("#extId").val();
-	_name = $("#name").val();
-	_gender= $("#gender option:selected").val();
-	_reportDate = getTimestamp($("#reportDate").val());
-	_cod = $("#cod option:selected").val();
-	_place = $("#location").val();
-	_precision = $("#locationP").val();
-	_langManagement = $("#OMEcod").val();
-	_country = $("#country option:selected").text();
-	_corridor = $("#corridor").val();
-	_lat = $("#lat").val();
-	_long = $("#long").val();
-
-
-		$.ajax({
-				url: "http://safetrails.herokuapp.com/cases/save.php",
-				   type: "POST",
-				   data:{
-					    extid:_extid,
-						name:_name,
-						gender:_gender,
-						reportDate:_reportDate,
-						cod:_cod,
-						place:_place,
-						precision:_precision,
-						langManagement:_langManagement,
-						country:_country,
-						corridor:_corridor,
-						lat:_lat,
-						long: _long
-					},
-				   xhrFields: {
-				      withCredentials: false
-				   },
-				   crossDomain: true,
-				   success: function(data){
-				   		console.log(data);
-				   		a = $.parseJSON(data);
-				   		console.log(a);
-				   		if(a.response=="success"){
-				   			console.log("entro");
-				   			$('#formLogin').trigger("reset");
-				   			    latLongMarker = new google.maps.Marker(
-								    {
-								    	map:map,
-								    	title: 'location'
-								    }
-						    	);
-				   			alert("Case created");
-				   		}else{
-				   			alert("error creating user");
-				   		}
-				   }
-				});}
-
-function initialize(lat, lng) {
-	geocoder = new google.maps.Geocoder();
-    google.maps.visualRefresh = true;
-    start = new google.maps.LatLng(lat, lng);
-    directionsDisplay = new google.maps.DirectionsRenderer();
-    var mapOptions = {
-        zoom: 6,
-        center: start,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-    directionsDisplay.setMap(map);
-    latLongMarker = new google.maps.Marker(
-    {
-    	map:map,
-    	title: 'location'
-    }
-    	);}
-
-
-</script>
-
-
-

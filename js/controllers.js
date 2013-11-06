@@ -65,7 +65,7 @@ emmigraphicsControllers.controller('createUserController',['$scope','$http',
 		    	return
 			}else{
 				user.password = CryptoJS.MD5(user.password).toString();
-				$http({
+/*				$http({
 					method: 'POST',
 					url: 'http://safetrails.herokuapp.com/u/save.php',
 					data: user,
@@ -79,7 +79,7 @@ emmigraphicsControllers.controller('createUserController',['$scope','$http',
 			   			$(".message").html("Something went Wrong");
 			   			console.log("error");
 			   		}
-				});
+				});*/
 			}
 			$scope.user=defaultUser;
 
