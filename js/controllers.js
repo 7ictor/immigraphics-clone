@@ -40,31 +40,6 @@ emmigraphicsControllers.controller('mainController',['$scope','$http',
 
 	}]);
 
-emmigraphicsControllers.controller('submitController',['$scope','$http',
-	function submitController($scope,$http){
-		$scope.Title = "Welcome, sumbit a case";
-		$http.get('json/countries.json').success(function(data) {
-	      $scope.countries = data;
-	      console.log(data);
-	    });
-
-	}]);
-
-emmigraphicsControllers.controller('statisticsController',['$scope','$http',
-	function statisticsController($scope,$http){
-		$scope.Title = "Statistics";
-
-
-	}]);
-
-
-emmigraphicsControllers.controller('searchController',['$scope','$http',
-	function searchController($scope,$http){
-		$scope.Title = "Search";
-
-
-	}]);
-
 
 emmigraphicsControllers.controller('createUserController',['$scope','$http',
 	function createUserController($scope,$http){
@@ -111,3 +86,29 @@ emmigraphicsControllers.controller('createUserController',['$scope','$http',
 		}
 
 	}]);
+
+emmigraphicsControllers.controller('submitController',['$scope','$http',
+	function submitController($scope,$http){
+		$scope.Title = "Welcome, sumbit a case";
+		$http.get('json/countries.json').success(function(data) {
+	      $scope.countries = data;
+	    });
+
+	}]);
+
+emmigraphicsControllers.controller('statisticsController',['$scope','$http',
+	function statisticsController($scope,$http){
+		$scope.Title = "Statistics";
+
+
+	}]);
+
+
+emmigraphicsControllers.controller('searchController',['$scope','$http',
+	function searchController($scope,$http){
+		$scope.Title = "Search";
+
+
+	}]);
+
+

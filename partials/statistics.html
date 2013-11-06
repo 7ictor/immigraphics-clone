@@ -19,29 +19,6 @@
 
 <script type="text/javascript">
 
-	$(function(){
-
-		initialize(30.600094,-105.076675);
-	});
-
-	function initialize(lat, lng) {
-	    google.maps.visualRefresh = true;
-	    start = new google.maps.LatLng(lat, lng);
-	    directionsDisplay = new google.maps.DirectionsRenderer();
-	    var mapOptions = {
-	        zoom: 6,
-	        center: start,
-	        mapTypeId: google.maps.MapTypeId.ROADMAP
-	    };
-	    map = new google.maps.Map(document.getElementById('map-canvas'),
-	      mapOptions);
-	    directionsDisplay.setMap(map);
-	    var marker = new google.maps.Marker({
-	        position: map.getCenter(),
-	        map: map,
-	        title: 'Your Address'
-	    });
-	}
 
 	// Initialize variables
 		var database = null;
@@ -394,8 +371,4 @@
 
 </script>
 
-
-
-
-</html>
 
