@@ -437,7 +437,7 @@ function initialize(lat, lng) {
 	}
 
 	/* 
-	The anatomy of the JSON should go like this:
+	The anatomy of the JSON should be like this:
 	data - {
 		nombre: "county"
 		genero: {
@@ -446,6 +446,29 @@ function initialize(lat, lng) {
 		}
 	}
 	*/
+
+	function toJSON(ref0, ref1, ref2, cont1, cont2) {
+		var jason = {};
+		for (var i = 0; i < ref0.length; i++) {
+			if (checkArray(ref0[i], ref1) || checkArray(ref0[i], ref2)) {
+				var mf = [0,0];
+				for (var j = 0; j < ref1.length; j++) {
+					if (ref0[i] == ref1[j]) {
+						mf[0] = count1[j];
+					}
+				}
+				for (var k = 0; k < ref2.length; k++) {
+					if (ref0[i] == ref2[k]) {
+						mf[1] = count2[k];
+					}
+				}
+				jason[i] = {'nombre': ref0[i], 'genero': {'name': 'male', 'value': mf[0]}};
+				jason[i] = {'nombre': ref0[i], 'genero': {'name': 'female', 'value': mf[1]}};
+			}
+		}
+		return jason;
+	}
+
 	function doubleBarGraphJSON(datos, title, place) {
 
 		var margin = {top: 10, right: 10, bottom: 25, left: 30},
