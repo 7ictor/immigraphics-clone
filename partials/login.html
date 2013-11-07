@@ -1,0 +1,35 @@
+<div id="caseContainer" class="leftContainer" >
+	<!-- Login div -->
+	<div id="logIn" class="row text-center">
+		<h3 >Welcome Back!</h3>
+		<form id="login" class="form-horizontal col-md-12" role="form" ng-submit="login()">
+		  <div class="form-group">
+		    <label for="userName" class="col-sm-3 control-label">Username</label>
+		    <div class="col-sm-9">
+		      <input type="text" class="form-control" id="userName" ng-model="user.name" placeholder="Username" required>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="password" class="col-sm-3 control-label">Password</label>
+		    <div class="col-sm-9">
+		      <input type="password" class="form-control" id="password" ng-model="user.password" placeholder="Password" required>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-1 col-sm-10">
+		      <button type="submit" id ="signIn" class="btn btn-default btn-success btn-sm">Sign in</button>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<!-- Request invitation div -->
+	<div id="register" class="row text-center">
+		<div class="message"></div>
+		<h3>Request invitation</h3>
+		<h6 >Bla bla bla bla bla bla bla, bla for request an invitation bla bla bla</h6>
+		<button id="saveUser" type="button" class="btn btn-default btn-success btn-sm">Send request</button>
+	</div>
+
+</div>
+
+
