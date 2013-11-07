@@ -27,7 +27,7 @@
 	}
 
 	.bar {
-		fill: darkgreen;
+		fill: #33aa33;
 	}
 
 	.x.axis path {
@@ -69,6 +69,7 @@
 				<button type="button" id ="gral" class="btn btn-default" onClick="generals()">General</button>
 				<button type="button" id ="tend" class="btn btn-default" onClick="specials()">Tendencies</button>
 			</div>
+			<div id="controls" class="row text-right"></div>
 			<div id="stats" class="row text-center">
 				<p style="font: 20 px; font-family: sans-serif">
 					<br>
@@ -263,6 +264,7 @@ function initialize(lat, lng) {
 		}
 	}
 
+	// Extracts basic info from the database
 	function extractor(db) {
 		for (var item in db) {
 
@@ -323,7 +325,8 @@ function initialize(lat, lng) {
 		return table;
 	}
 
-	function graphics(datos, title) {
+	// d3.js graphics
+	function doubleBarGraph(datos, title, place) {
 
 		var margin = {top: 10, right: 10, bottom: 25, left: 30},
 		width = 600 - margin.left - margin.right,
@@ -349,7 +352,7 @@ function initialize(lat, lng) {
 		.orient("left")
 		.tickFormat(d3.format(".2s"));
 
-		document.getElementById('stats').innerHTML = "<p style='font: 20 px; font-family: sans-serif'><br>" + title + "</p>";
+		document.getElementById(place).innerHTML = "<p style='font: 20 px; font-family: sans-serif'><br>" + title + "</p>";
 
 		var svg = d3.select("div#stats").append("svg")
 		.attr("width", width + margin.left + margin.right)
@@ -358,12 +361,20 @@ function initialize(lat, lng) {
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 		d3.csv(datos, function(error, data) {
+			console.log("Datos burdos:");
+			console.log(data);
 			var generosG = d3.keys(data[0]).filter(function(key) { return key !== "gender"; });
+			console.log("Extraccion de llaves (filtro: no gender):");
+			console.log(generosG);
 
 			data.forEach(function(d) {
 				d.genero = generosG.map(function(name) { return {name: name, value: +d[name]}; });
 			});
+			console.log("Datos mappeados con los generos:")
+			console.log(data);
 
+			console.log("Datos mappeados con funcion para dominio:");
+			console.log(data.map(function(d) { return d.gender; }));
 			x0.domain(data.map(function(d) { return d.gender; }));
 			x1.domain(generosG).rangeRoundBands([0, x0.rangeBand()]);
 			y.domain([0, d3.max(data, function(d) { return d3.max(d.genero, function(d) { return d.value; }); })]);
@@ -387,7 +398,12 @@ function initialize(lat, lng) {
 			.data(data)
 			.enter().append("g")
 			.attr("class", "g")
-			.attr("transform", function(d) { return "translate(" + x0(d.gender) + ",0)"; });
+			.attr("transform", function(d) {
+				console.log(d);
+				console.log(d.gender);
+				console.log(x0(d.gender));
+				return "translate(" + x0(d.gender) + ",0)"; });
+			console.log("Aquella cosa que no se que hace:");			
 
 			state.selectAll("rect")
 			.data(function(d) { return d.genero; })
@@ -418,12 +434,112 @@ function initialize(lat, lng) {
 			.text(function(d) { return d; });
 
 		});
-}
-
-	function generals() {
-		graphics('tablita.csv', 'Deaths in various corridors across the border.');
 	}
 
+	/* 
+	The anatomy of the JSON should go like this:
+	data - {
+		nombre: "county"
+		genero: {
+			name: "male"
+			value: 123
+		}
+	}
+	*/
+	function doubleBarGraphJSON(datos, title, place) {
+
+		var margin = {top: 10, right: 10, bottom: 25, left: 30},
+		width = 600 - margin.left - margin.right,
+		height = 350 - margin.top - margin.bottom;
+
+		var x0 = d3.scale.ordinal()
+		.rangeRoundBands([0, width], .1);
+
+		var x1 = d3.scale.ordinal();
+
+		var y = d3.scale.linear()
+		.range([height, 0]);
+
+		var color = d3.scale.ordinal()
+		.range(["#55aa55", "#99ff99"]);
+
+		var xAxis = d3.svg.axis()
+		.scale(x0)
+		.orient("bottom");
+
+		var yAxis = d3.svg.axis()
+		.scale(y)
+		.orient("left")
+		.tickFormat(d3.format(".2s"));
+
+		document.getElementById(place).innerHTML = "<p style='font: 20 px; font-family: sans-serif'><br>" + title + "</p>";
+
+		var svg = d3.select("div#stats").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		d3.json(datos, function(error, data) {
+			var generos = d3.keys(data[0]['genero']);
+
+			x0.domain(data.map(function(d) { return d.nombre; }));
+			x1.domain(generos).rangeRoundBands([0, x0.rangeBand()]);
+			y.domain([0, d3.max(data, function(d) { return d3.max(d.genero, function(d) { return d.value; }); })]);
+
+			svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(xAxis);
+
+			svg.append("g")
+			.attr("class", "y axis")
+			.call(yAxis)
+			.append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 6)
+			.attr("dy", ".71em")
+			.style("text-anchor", "end")
+			.text("Individuals");
+
+			var state = svg.selectAll(".state")
+			.data(data)
+			.enter().append("g")
+			.attr("class", "g")
+			.attr("transform", function(d) { return "translate(" + x0(d.nombre) + ",0)"; });
+
+			state.selectAll("rect")
+			.data(function(d) { return d.genero; })
+			.enter().append("rect")
+			.attr("width", x1.rangeBand())
+			.attr("x", function(d) { return x1(d.name); })
+			.attr("y", function(d) { return y(d.value); })
+			.attr("height", function(d) { return height - y(d.value); })
+			.style("fill", function(d) { return color(d.name); });
+
+			var legend = svg.selectAll(".legend")
+			.data(generos.slice().reverse())
+			.enter().append("g")
+			.attr("class", "legend")
+			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+			legend.append("rect")
+			.attr("x", width - 18)
+			.attr("width", 18)
+			.attr("height", 18)
+			.style("fill", color);
+
+			legend.append("text")
+			.attr("x", width - 24)
+			.attr("y", 9)
+			.attr("dy", ".35em")
+			.style("text-anchor", "end")
+			.text(function(d) { return d; });
+
+		});
+	}
+
+	// Transforming the data to a decent format for d3
 	function toCSV(tabla) {
 		var csvContent = "data:text/csv;charset=utf-8,";
 		tabla.forEach(function(infoArray, index) {
@@ -437,6 +553,12 @@ function initialize(lat, lng) {
 		return link;
 	}
 
+	// Activates general graphics
+	function generals() {
+		doubleBarGraph('tablita.csv', 'Deaths in various corridors across the border.', 'stats');
+	}	
+
+	// Activates special graphics
 	function specials() {
 		document.getElementById('stats').innerHTML = "<p style='font: 20 px; font-family: sans-serif'><br>Under construction ...</p>";
 	}
