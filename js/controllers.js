@@ -2,9 +2,9 @@
 
 /* Controllers */
 
-var emmigraphicsControllers = angular.module('emmigraphicsControllers',[]);
+var immigraphicsControllers = angular.module('immigraphicsControllers',[]);
 
-emmigraphicsControllers.controller('mainController',['$scope','$http',
+immigraphicsControllers.controller('mainController',['$scope','$http',
 	function MainController($scope,$http){
 	    $scope.user={
 	    	name:'',
@@ -35,13 +35,13 @@ emmigraphicsControllers.controller('mainController',['$scope','$http',
 		   			console.log("error");
 		   		}
 			});
-			
+
 		}
 
 	}]);
 
 
-emmigraphicsControllers.controller('createUserController',['$scope','$http',
+immigraphicsControllers.controller('createUserController',['$scope','$http',
 	function createUserController($scope,$http){
 		$scope.Title = "Search";
 		$http.get('json/states.json').success(function(data) {
@@ -49,7 +49,7 @@ emmigraphicsControllers.controller('createUserController',['$scope','$http',
 	    });
 
 		$scope.createUser = function(){
-			
+
 			var user = $scope.user;
 			var defaultUser={
 					   username:"",
@@ -87,7 +87,7 @@ emmigraphicsControllers.controller('createUserController',['$scope','$http',
 
 	}]);
 
-emmigraphicsControllers.controller('submitController',['$scope','$http',
+immigraphicsControllers.controller('submitController',['$scope','$http',
 	function submitController($scope,$http){
 		$scope.Title = "Welcome, sumbit a case";
 		$http.get('json/countries.json').success(function(data) {
@@ -96,7 +96,7 @@ emmigraphicsControllers.controller('submitController',['$scope','$http',
 
 	}]);
 
-emmigraphicsControllers.controller('statisticsController',['$scope','$http',
+immigraphicsControllers.controller('statisticsController',['$scope','$http',
 	function statisticsController($scope,$http){
 		$scope.Title = "Statistics";
 
@@ -104,7 +104,7 @@ emmigraphicsControllers.controller('statisticsController',['$scope','$http',
 	}]);
 
 
-emmigraphicsControllers.controller('searchController',['$scope','$http',
+immigraphicsControllers.controller('searchController',['$scope','$http',
 	function searchController($scope,$http){
 		$scope.Title = "Search";
 

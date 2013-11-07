@@ -2,12 +2,12 @@
 
 /* App Module */
 
-var emmigraphics = angular.module('emmigraphics', [
+var immigraphicsApp = angular.module('immigraphicsApp', [
   'ngRoute',
-  'emmigraphicsControllers'
+  'immigraphicsControllers'
 ]);
 
-emmigraphics.config(['$routeProvider','$httpProvider',
+immigraphicsApp.config(['$routeProvider','$httpProvider',
   function($routeProvider,$httpProvider) {
     $routeProvider.
       when('/', {
@@ -21,7 +21,7 @@ emmigraphics.config(['$routeProvider','$httpProvider',
       when('/create', {
         templateUrl: 'partials/create_user.html',
         controller: 'createUserController'
-      }).      
+      }).
       when('/submit', {
         templateUrl: 'partials/submit_case.html',
         controller: 'submitController'
@@ -29,11 +29,11 @@ emmigraphics.config(['$routeProvider','$httpProvider',
       when('/search', {
         templateUrl: 'partials/search.html',
         controller: 'searchController'
-      }).          
+      }).
       when('/statistics', {
         templateUrl: 'partials/statistics.html',
         controller: 'statisticsController'
-      }).               
+      }).
       otherwise({
         redirectTo: '/home'
       });
