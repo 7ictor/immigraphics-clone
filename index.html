@@ -1,67 +1,54 @@
+<!DOCTYPE html>
 <html ng-app="emmigraphics">
 <head>
-	<meta charset="utf-8">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
-	<title>Safe Trails - deaths along the US-Mexican border</title>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="css/main.css">
-	<!-- libraries -->
-	<script src="lib/jquery-1.9.1.min.js"></script>
-	<script src="lib/bootstrap.min.js"></script>
-	<script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXviwE2c0aIB_zEL1-GMDZTlwoa-XPMZk&sensor=false">
-    </script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-	<script src="lib/md5.js"></script>
-	<!-- Angular Js -->
-	<script src="lib/angular/angular.js"></script>
-    <script src="lib/angular/angular-route.js"></script>
-    
-	<!--Angular Configurations and controllers  -->
-    <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <title>Immigraphics</title>
+  <meta content="" name="description">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <!-- App scripts -->
-    <script src="lib/main.js"></script>
-  	<script src="lib/submit_case.js"></script>
-  	<script src="lib/search.js"></script>
-    <script src="lib/statistics.js"></script>
-    <script src="lib/create_user.js"></script>
-    
+  <!-- Le CSS -->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+
+  <!-- Le Javascript libraries -->
+  <script src="lib/jquery/jquery-1.10.2.js"></script>
+  <script src="lib/d3/d3.v3.js"></script>
+  <script src="lib/md5.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-route.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXviwE2c0aIB_zEL1-GMDZTlwoa-XPMZk&sensor=false"></script>
+
+  <!-- Le App Javascript  -->
+  <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="lib/main.js"></script>
 
 </head>
-	<body>
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-		  <!-- Brand and toggle get grouped for better mobile display -->
-		  <div class="navbar-header">
-		    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#safe-trails-nav">
-		      <span class="sr-only">Toggle navigation</span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		      <span class="icon-bar"></span>
-		    </button>
-		    <a class="navbar-brand" href="#/home">Safe Trails</a>
-		  </div>
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#safe-trails-nav">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/home">Safe Trails</a>
+    </div>
 
-		  <!-- Collect the nav links, forms, and other content for toggling -->
-		  <div class="collapse navbar-collapse" id="safe-trails-nav">
-		    <ul class="nav navbar-nav">
-		      <li><a href="#/create">Create user</a></li>	
-		      <li><a href="#/submit">Submit</a></li>
-		      <li><a href="#/search">Search</a></li>
-		      <li><a href="#/statistics">Statistics</a></li>
-		    </ul>
-		</nav>
+    <div class="collapse navbar-collapse" id="safe-trails-nav">
+      <ul class="nav navbar-nav">
+        <li><a href="#/create">Create user</a></li>
+        <li><a href="#/submit">Submit</a></li>
+        <li><a href="#/search">Search</a></li>
+        <li><a href="#/statistics">Statistics</a></li>
+      </ul>
+    </div>
+  </nav>
 
-		<div class="main" ng-view>
-
-
-		</div>
-		<div id="map-canvas">
-
-		</div>
+  <div class="main" ng-view></div>
+  <div id="map-canvas"></div>
 </body>
 </html>
-
