@@ -2,6 +2,11 @@
 
 /* Controllers */
 
+function getTimestamp(str) {
+  var d = str.match(/\d+/g); // extract date parts
+  return +new Date(d[0],d[1],d[2]);
+}
+
 var immigraphicsControllers = angular.module('immigraphicsControllers',[]);
 
 immigraphicsControllers.controller('NavCtrl',
@@ -35,115 +40,80 @@ immigraphicsControllers.controller('LoginCtrl',
     },
     function(err) {
       $rootScope.error = "Failed to login";
+      alert("Failed to login");
     });
   };
 }]);
 
-/*immigraphicsControllers.controller('mainController',['$scope','$http',
-  function MainController($scope,$http){
-      $scope.user={
-        name:'',
-        password:''
-      };
-    $scope.Title = "login";
-    // login function
-    $scope.login = function(){
-      var _username = $scope.user.name;
-      var _password = $scope.user.password;
-      var _passwordEnc = CryptoJS.MD5(_password).toString();
-      console.log(_username+": "+_passwordEnc);
-      $http({
-        method: 'POST',
-        url: 'http://safetrails.herokuapp.com/u/auth.php',
-        data: {
-          username:_username,
-          password:_passwordEnc
-        },
-         withCredentials: false
-      }).success(function(data){
-        console.log(data);
-        if(data.response=="success"){
-            console.log("entro");
-            window.location.href="#/submit"
-          }else{
-            $(".message").html("Wrong username or password, please try again");
-            console.log("error");
-          }
-      });
+immigraphicsControllers.controller('CreateCtrl',
+  ['$rootScope', '$http', '$scope', '$location', '$window', 'Auth', function($rootScope, $http, $scope, $location, $window, Auth) {
 
+  $http.get('json/states.json').success(function(data) { $scope.states = data; });
+
+  $scope.register = function() {
+    if($scope.password!=$scope.password2) {
+      alert('Password does not match the confirmation password.')
+    } else {
+      Auth.register({
+        username: $scope.username,
+        password: CryptoJS.MD5($scope.password).toString(),
+        profession: $scope.profession,
+        location_authority: '',
+        country: '',
+        admn_lvl_1: $scope.state,
+        admn_lvl_2: '',
+        locality: '',
+        sublocality: '',
+        email: $scope.email
+      },
+      function(res) {
+        $location.path('/create-user');
+      },
+      function(err) {
+        $rootScope.error = "Failed to create user";
+        alert("Failed to create the user");
+      });
     }
+  };
+}]);
 
-  }]);
+immigraphicsControllers.controller('CaseCtrl',
+  ['$rootScope', '$http', '$scope', '$location', '$window', 'Auth', function($rootScope, $http, $scope, $location, $window, Auth) {
 
+  $http.get('json/countries.json').success(function(data) { $scope.countries = data; });
+  $scope.create = function() {
+    Auth.create({
+      ext_id: $scope.extId,
+      name: $scope.name,
+      gender: $scope.gender,
+      report_date: getTimestamp($scope.reportDate),
+      cod: $scope.cod,
+      ome_cod: $scope.OMEcod,
+      rough_precision: $scope.locationP,
+      country: $scope.country,
+      lat: $scope.lat,
+      lng: $scope.lng,
+      admn_lvl_1: '',
+      admn_lvl_2: '',
+      locality: $scope.location,
+      sublocality: ''
+    },
+    function(res) {
+      $location.path('/submit-case');
+    },
+    function(err) {
+      $rootScope.error = "Failed to create case";
+      alert("Failed to create case");
+    });
+  };
+}]);
 
-immigraphicsControllers.controller('createUserController',['$scope','$http',
-  function createUserController($scope,$http){
-    $scope.Title = "Search";
-    $http.get('json/states.json').success(function(data) {
-        $scope.states = data;
-      });
-
-    $scope.createUser = function(){
-
-      var user = $scope.user;
-      var defaultUser={
-             username:"",
-             password:"",
-             profession:"",
-             state:"",
-             county:"county_test",
-             email:""
-          };
-      console.log(user.password+" : "+user.password2)
-      if(user.password!=user.password2){
-        alert("Passwords do not match");
-          return
-      }else{
-        user.password = CryptoJS.MD5(user.password).toString();
-/*        $http({
-          method: 'POST',
-          url: 'http://safetrails.herokuapp.com/u/save.php',
-          data: user,
-          withCredentials: false
-        }).success(function(data){
-          console.log(data);
-          if(data.response=="success"){
-              console.log("entro");
-              $(".message").html("User created");
-            }else{
-              $(".message").html("Something went Wrong");
-              console.log("error");
-            }
-        });
-      }
-      $scope.user=defaultUser;
-
-    }
-
-  }]);
-
-immigraphicsControllers.controller('submitController',['$scope','$http',
-  function submitController($scope,$http){
-    $scope.Title = "Welcome, sumbit a case";
-    $http.get('json/countries.json').success(function(data) {
-        $scope.countries = data;
-      });
-
-  }]);
-
-immigraphicsControllers.controller('statisticsController',['$scope','$http',
-  function statisticsController($scope,$http){
+immigraphicsControllers.controller('StatCtrl',
+  ['$scope','$http', function($scope,$http){
     $scope.Title = "Statistics";
-
-
   }]);
 
-
-immigraphicsControllers.controller('searchController',['$scope','$http',
-  function searchController($scope,$http){
+immigraphicsControllers.controller('SearchCtrl',
+  ['$scope','$http', function($scope,$http){
     $scope.Title = "Search";
-
-
   }]);
-
-*/
