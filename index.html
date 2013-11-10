@@ -28,7 +28,7 @@
   <script src="js/directives.js"></script>
   <script src="js/services.js"></script>
   <script src="js/filters.js"></script>
-  <!--<script src="lib/main.js"></script>-->
+  <script src="lib/main.js"></script>
 
 </head>
 <body>
@@ -41,7 +41,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#/">Safe Trails</a>
+      <a class="navbar-brand" href="#/"><img src="img/logo_immigraphics.png" alt="Immigraphics"></a>
     </div>
 
     <div class="collapse navbar-collapse" id="safe-trails-nav">
@@ -51,12 +51,15 @@
         <li data-access-level="accessLevels.user"><a href="#/submit-case">Submit Case</a></li>
         <li data-access-level="accessLevels.public"><a href="#/search">Search</a></li>
         <li data-access-level="accessLevels.public"><a href="#/statistics">Statistics</a></li>
-        <li data-access-level="accessLevels.user"><a href="" data-ng-click="logout()">Log Out</a></li>
+        <li data-access-level="accessLevels.user"><a href="" data-ng-click="logout()">Log out</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li data-access-level="accessLevels.user">Welcome <strong>{{ user.username }}</strong></li>
       </ul>
     </div>
   </nav>
 
   <div class="main" ng-view></div>
-  <!--<div id="map-canvas"></div>-->
+  <div id="map-canvas"></div>
 </body>
 </html>
