@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="immigraphicsApp">
+<head>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <title>Immigraphics</title>
+  <meta content="" name="description">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+
+  <!-- Le CSS -->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/statistics.css">
+
+  <!-- Le Javascript libraries -->
+  <script src="lib/jquery/jquery-1.10.2.js"></script>
+  <script src="lib/underscore/underscore-min.js"></script>
+  <script src="lib/d3/d3.v3.js"></script>
+  <script src="lib/md5.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-route.js"></script>
+  <script src="lib/angular/angular-cookies.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXviwE2c0aIB_zEL1-GMDZTlwoa-XPMZk&sensor=false"></script>
+
+  <!-- Le App Javascript  -->
+  <script src="js/app.js"></script>
+  <script src="js/routingConfig.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/directives.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="lib/statistics_old.js"></script>
+  <!--<script src="lib/main.js"></script>-->
+
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top" data-ng-controller="NavCtrl" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#safe-trails-nav">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/">Safe Trails</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="safe-trails-nav">
+      <ul class="nav navbar-nav">
+        <li data-access-level="accessLevels.anon"><a href="#/login">Log in</a></li>
+        <li data-access-level="accessLevels.admin"><a href="#/create-user">Create User</a></li>
+        <li data-access-level="accessLevels.user"><a href="#/submit-case">Submit Case</a></li>
+        <li data-access-level="accessLevels.public"><a href="#/search">Search</a></li>
+        <li data-access-level="accessLevels.public"><a href="#/statistics">Statistics</a></li>
+        <li data-access-level="accessLevels.user"><a href="" data-ng-click="logout()">Log Out</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div id="caseContainer" class="leftContainer" >
+  <div id="statistics" class="row text-center">
+    <h3 >Statistics</h3>
+    <div id="tabs" class="row text-center">
+      <button type="button" id ="gral" class="btn btn-default" onClick="generals()">General</button>
+      <button type="button" id ="tend" class="btn btn-default" onClick="specials()">Tendencies</button>
+    </div>
+    <div id="controls" class="row text-right"></div>
+    <div id="stats" class="row text-center">
+      <p style="font: 20 px; font-family: sans-serif">
+        <br>
+        Welcome to the statistics system. For general statistics,<br>
+        please click on the general statistics tab.<br>
+        For more advanced statistics and tendencies, click on the<br>
+        tendencies tab. Please wait while the data loads ...
+      </p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
