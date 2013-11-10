@@ -26,6 +26,16 @@ immigraphicsApp.config(['$routeProvider', '$locationProvider', '$httpProvider', 
       controller:     'LoginCtrl',
       access:         access.anon
     }).
+    when('/create-user', {
+      templateUrl:    'partials/create_user.html',
+      controller:     'CreateCtrl',
+      access:         access.admin
+    }).
+    when('/submit-case', {
+      templateUrl:    'partials/submit_case.html',
+      controller:     'CaseCtrl',
+      access:         access.user
+    }).
     otherwise({redirectTo:'/'});
 
   $locationProvider.html5Mode(false);
