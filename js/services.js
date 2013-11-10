@@ -31,15 +31,15 @@ immigraphicsServices.factory('Auth',
       return user.role.title == userRoles.user.title || user.role.title == userRoles.admin.title;
     },
     register: function(user, success, error) {
-      $http.post('/register', user).success(function(res) {
-        changeUser(res);
-        success();
+      console.log(user);
+      $http.post('http://safetrails.herokuapp.com/index.php/u', user).success(function(res) {
+        console.log(res);
       }).error(error);
     },
     login: function(user, success, error) {
       $http.post('http://safetrails.herokuapp.com/index.php/authorize', user).success(function(user){
-          changeUser(user);
-          success(user);
+        changeUser(user);
+        success(user);
       }).error(error);
     },
     logout: function(success, error) {
@@ -50,6 +50,12 @@ immigraphicsServices.factory('Auth',
         });
         success();
       //}).error(error);
+    },
+    create: function(c, success, error) {
+      console.log(c);
+      $http.post('http://safetrails.herokuapp.com/index.php/cases', c).success(function(res) {
+        console.log(res);
+      }).error(error);
     },
     accessLevels: accessLevels,
     userRoles: userRoles,
