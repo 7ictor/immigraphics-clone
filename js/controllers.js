@@ -120,6 +120,10 @@ immigraphicsControllers.controller('SearchCtrl',
 
   $http.get('json/countries.json').success(function(data) { $scope.countries = data; });
   $scope.search = function() {
+    var boundActivate = true;
+    if($scope.name === undefined && $scope.gender === undefined && $scope.cod === undefined && $scope.country === undefined ) {
+      boundActivate = false;
+    }
     Auth.search({
       name: $scope.name,
       gender: $scope.gender,
@@ -169,7 +173,7 @@ immigraphicsControllers.controller('SearchCtrl',
         oldMarkers.push( marker );
       });
 
-      if (cont != 0) map.fitBounds(fullBounds);
+      if (cont != 0 && boundActivate) map.fitBounds(fullBounds);
     },
     function(err) {
       $rootScope.error = "";
