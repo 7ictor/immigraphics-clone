@@ -31,15 +31,17 @@ immigraphicsServices.factory('Auth',
       return user.role.title == userRoles.user.title || user.role.title == userRoles.admin.title;
     },
     register: function(user, success, error) {
-      console.log(user);
-      $http.post('http://safetrails.herokuapp.com/index.php/u', user).success(function(res) {
-        console.log(res);
+      var token_oauth = $cookieStore.get('token');
+      $http.post('http://safetrails.herokuapp.com/index.php/u/save', user, {headers: {'Authorization_oauth_token': token_oauth}}).success(function(res) {
+        success(res);
+        alert(res.message);
       }).error(error);
     },
     login: function(user, success, error) {
       $http.post('http://safetrails.herokuapp.com/index.php/authorize', user).success(function(user){
         changeUser(user);
         success(user);
+        $cookieStore.put('token', user.access_token);
       }).error(error);
     },
     logout: function(success, error) {
@@ -52,15 +54,14 @@ immigraphicsServices.factory('Auth',
       //}).error(error);
     },
     create: function(c, success, error) {
-      console.log(c);
-      $http.post('http://safetrails.herokuapp.com/index.php/cases', c).success(function(res) {
-        console.log(res);
+      var token_oauth = $cookieStore.get('token');
+      $http.post('http://safetrails.herokuapp.com/index.php/cases', c, {headers: {'Authorization_oauth_token': token_oauth}}).success(function(res) {
+        success(res);
+        alert(res.message);
       }).error(error);
     },
     search: function(query, success, error) {
-      //console.log(query);
       $http.get('http://safetrails.herokuapp.com/index.php/cases', { params: query }).success(function(res) {
-        //console.log(res);
         success(res);
       }).error(error);
     },
