@@ -84,17 +84,18 @@ html,body{
     background: url('../img/loading.gif') no-repeat 50% 50%;
     opacity: 0.85;
 }
+#loading-data.search{
+    display: none;
+}
 .axis path,
 .axis line {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
 }
-
 .bar {
     fill: #33aa33;
 }
-
 .x.axis path {
     display: none;
 }
