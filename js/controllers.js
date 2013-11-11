@@ -120,6 +120,7 @@ immigraphicsControllers.controller('SearchCtrl',
   $http.get('json/countries.json').success(function(data) { $scope.countries = data; });
   $scope.search = function() {
     var boundActivate = true;
+    $('#loading-data').show();
     if($scope.name === undefined && $scope.gender === undefined && $scope.cod === undefined && $scope.country === undefined ) {
       boundActivate = false;
     }
@@ -131,8 +132,8 @@ immigraphicsControllers.controller('SearchCtrl',
       limit: 200
     },
     function(res) {
+      $('#loading-data').hide();
       $location.path('/search');
-      //console.log(res);
       if(oldMarkers && oldMarkers.length !== 0){
         for(var i = 0; i < oldMarkers.length; ++i){
           oldMarkers[i].setMap(null);
@@ -176,6 +177,7 @@ immigraphicsControllers.controller('SearchCtrl',
       if (cont == 1) map.setZoom(14);
     },
     function(err) {
+      $('#loading-data').hide();
       $rootScope.error = "";
       alert("Can not contact the server, try again later.");
     });
@@ -202,5 +204,5 @@ immigraphicsControllers.controller('StatCtrl',
     // Building tree
     treeSeed();
     waterTheTree(database);
-  }).error();
+  }).error(function(eror){$('#loading-data').hide();});
 }]);
