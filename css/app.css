@@ -41,8 +41,15 @@ html,body{
     bottom: 0;
     padding: 25px 50px;
     z-index: 999;
-    background-color: rgba(248,248,248,0.65);
+    background-color: rgba(248,248,248,0.85);
     border-right: 2px solid #e7e7e7;
+}
+.leftContainer.statistics{
+    width: 800px;
+    overflow-x: auto;
+}
+.leftContainer.search{
+    background-color: rgba(248,248,248,0.60);
 }
 .table-results{
     padding: 20px;
@@ -66,4 +73,28 @@ html,body{
     cursor: pointer;
     background-color: #3e8f3e;
     z-index: 100;
+}
+#loading-data{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: url('../img/loading.gif') no-repeat 50% 50%;
+    opacity: 0.85;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.bar {
+    fill: #33aa33;
+}
+
+.x.axis path {
+    display: none;
 }
