@@ -58,16 +58,14 @@ immigraphicsControllers.controller('CreateCtrl',
         username: $scope.username,
         password: CryptoJS.MD5($scope.password).toString(),
         profession: $scope.profession,
-        location_authority: '',
+        state: $scope.state,
         country: '',
-        admn_lvl_1: $scope.state,
-        admn_lvl_2: '',
-        locality: '',
-        sublocality: '',
-        email: $scope.email
+        email: $scope.email,
+        bitmask: 2,
+        title: "user"
       },
       function(res) {
-        $location.path('/create-user');
+        $location.path('/');
       },
       function(err) {
         $rootScope.error = "Failed to create user";
@@ -83,23 +81,24 @@ immigraphicsControllers.controller('CaseCtrl',
   $http.get('json/countries.json').success(function(data) { $scope.countries = data; });
   $scope.create = function() {
     Auth.create({
-      ext_id: $scope.extId,
-      name: $scope.name,
-      gender: $scope.gender,
-      report_date: getTimestamp($scope.reportDate),
-      cod: $scope.cod,
-      ome_cod: $scope.OMEcod,
-      rough_precision: $scope.locationP,
-      country: $scope.country,
-      lat: $scope.lat,
-      lng: $scope.lng,
       admn_lvl_1: '',
       admn_lvl_2: '',
+      cod: $scope.cod,
+      country: $scope.country,
+      data_source: '',
+      ext_id: $scope.extId,
+      gender: $scope.gender,
+      lat: $scope.lat,
+      lng: $scope.lng,
       locality: $scope.location,
-      sublocality: ''
+      name: $scope.name,
+      ome_cod: $scope.OMEcod,
+      report_date: getTimestamp($scope.reportDate),
+      sublocality: '',
+      rough_precision: $scope.locationP
     },
     function(res) {
-      $location.path('/submit-case');
+      $location.path('/');
     },
     function(err) {
       $rootScope.error = "Failed to create case";
@@ -174,6 +173,7 @@ immigraphicsControllers.controller('SearchCtrl',
       });
 
       if (cont != 0 && boundActivate) map.fitBounds(fullBounds);
+      if (cont == 1) map.setZoom(14);
     },
     function(err) {
       $rootScope.error = "";
