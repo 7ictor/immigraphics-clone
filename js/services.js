@@ -57,6 +57,13 @@ immigraphicsServices.factory('Auth',
         console.log(res);
       }).error(error);
     },
+    search: function(query, success, error) {
+      //console.log(query);
+      $http.get('http://safetrails.herokuapp.com/index.php/cases', { params: query }).success(function(res) {
+        //console.log(res);
+        success(res);
+      }).error(error);
+    },
     accessLevels: accessLevels,
     userRoles: userRoles,
     user: currentUser
