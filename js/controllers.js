@@ -114,6 +114,66 @@ immigraphicsControllers.controller('StatCtrl',
   }]);
 
 immigraphicsControllers.controller('SearchCtrl',
-  ['$scope','$http', function($scope,$http){
-    $scope.Title = "Search";
-  }]);
+  ['$rootScope', '$http', '$scope', '$location', '$window', 'Auth', function($rootScope, $http, $scope, $location, $window, Auth){
+  $scope.Title = "Search";
+  var oldMarkers = [];
+
+  $http.get('json/countries.json').success(function(data) { $scope.countries = data; });
+  $scope.search = function() {
+    Auth.search({
+      name: $scope.name,
+      gender: $scope.gender,
+      cod: $scope.cod,
+      country: $scope.country,
+      limit: 200
+    },
+    function(res) {
+      $location.path('/search');
+      //console.log(res);
+      if(oldMarkers && oldMarkers.length !== 0){
+        for(var i = 0; i < oldMarkers.length; ++i){
+          oldMarkers[i].setMap(null);
+        }
+      }
+
+      var cont = 0;
+      var currentInfoWindow = null;
+      var fullBounds = new google.maps.LatLngBounds();
+
+      $.each(res, function(i) {
+        cont++;
+        var point = new google.maps.LatLng(this.lat, this.lng);
+        fullBounds.extend(point);
+        var marker = new google.maps.Marker({
+          position: point,
+          map: map,
+          title: this.name
+        });
+        marker.info = new google.maps.InfoWindow({
+          content: '<b>Case ' + this.ext_id + '</b><br>'
+            + this.name + ', ' + this.gender + '<br><br>'
+            + '<b>Reporting Date:</b> '+  this.report_date + '<br>'
+            + '<b>Country:</b> ' + this.country + '<br>'
+            + '<b>Precision:</b> ' + this.rough_precision + '<br>'
+            + '<b>Cause of Death:</b> ' + this.cod + '<br>'
+            + '<b>Description:</b> ' + this.omd_cod + '<br>'
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          if (currentInfoWindow != null) {
+            currentInfoWindow.close();
+          }
+          marker.info.open(map, marker);
+          currentInfoWindow = marker.info;
+        });
+        oldMarkers.push( marker );
+      });
+
+      if (cont != 0) map.fitBounds(fullBounds);
+    },
+    function(err) {
+      $rootScope.error = "";
+      alert("Can not contact the server, try again later.");
+    });
+  };
+}]);
