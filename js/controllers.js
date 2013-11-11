@@ -177,3 +177,26 @@ immigraphicsControllers.controller('SearchCtrl',
     });
   };
 }]);
+
+immigraphicsControllers.controller('StatCtrl',
+  ['$rootScope', '$http', '$scope', '$location', '$window', 'Auth', function($rootScope, $http, $scope, $location, $window, Auth){
+  $scope.Title = "Stats";
+
+
+  $http.get('http://safetrails.herokuapp.com/index.php/cases', { params: {limit: 3000 }, cache: true }).success(function(data) {
+    $('#loading-data').hide();
+    // Extract info
+    database = data;
+    // Let's do some magic
+    datesInitializer();
+    datesGenerator();
+    total = Object.keys(database).length;
+
+    // Extracting data one item at a time
+    extractor(database);
+
+    // Building tree
+    treeSeed();
+    waterTheTree(database);
+  }).error();
+}]);
