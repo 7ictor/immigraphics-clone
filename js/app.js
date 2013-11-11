@@ -41,6 +41,11 @@ immigraphicsApp.config(['$routeProvider', '$locationProvider', '$httpProvider', 
       controller:     'SearchCtrl',
       access:         access.public
     }).
+    when('/statistics', {
+      templateUrl:    'partials/statistics.html',
+      controller:     'StatCtrl',
+      access:         access.public
+    }).
     otherwise({redirectTo:'/'});
 
   $locationProvider.html5Mode(false);
