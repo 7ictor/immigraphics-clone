@@ -36,6 +36,11 @@ immigraphicsApp.config(['$routeProvider', '$locationProvider', '$httpProvider', 
       controller:     'CaseCtrl',
       access:         access.user
     }).
+    when('/search', {
+      templateUrl:    'partials/search.html',
+      controller:     'SearchCtrl',
+      access:         access.public
+    }).
     otherwise({redirectTo:'/'});
 
   $locationProvider.html5Mode(false);
