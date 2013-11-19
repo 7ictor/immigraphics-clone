@@ -7,10 +7,12 @@ var immigraphicsApp = angular.module('immigraphicsApp', [
   'immigraphicsDirectives',
   'immigraphicsServices',
   'ngRoute',
-  'ngCookies'
+  'ngCookies',
+  'angulartics', 
+  'angulartics.google.analytics'
 ]);
 
-immigraphicsApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
+immigraphicsApp.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider, $analyticsProvider) {
 
   $httpProvider.defaults.withCredentials = false;
   var access = routingConfig.accessLevels;
